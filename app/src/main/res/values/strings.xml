@@ -11,4 +11,5 @@
     <string name="humidity_num">0%</string>
     <string name="wind_speed_caption">Wind Speed:\u0020</string>
     <string name="wind_speed_num">0mph</string>
+    <string name="mock_location_btn">Mock Location</string>
 </resources>

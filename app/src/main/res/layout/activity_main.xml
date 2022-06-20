@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".MainActivity">
 
     <TextView
@@ -31,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/weather_caption"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/temperature_num"/>
 
@@ -41,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/max_temp_caption"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/weather_caption"
         app:layout_constraintLeft_toLeftOf="@id/left_guideline"/>
 
@@ -50,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/max_temp_num"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/weather_caption"
         app:layout_constraintLeft_toRightOf="@id/max_temp_caption"/>
 
@@ -58,6 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/min_temp_caption"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/max_temp_caption"
         app:layout_constraintLeft_toLeftOf="@id/left_guideline"/>
 
@@ -66,6 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/min_temp_num"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/max_temp_caption"
         app:layout_constraintLeft_toRightOf="@id/min_temp_caption" />
 
@@ -74,6 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/humidity_caption"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/min_temp_caption"
         app:layout_constraintLeft_toLeftOf="@id/left_guideline"/>
 
@@ -82,6 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/humidity_num"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/min_temp_caption"
         app:layout_constraintLeft_toRightOf="@id/humidity_caption" />
 
@@ -90,6 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/wind_speed_caption"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/humidity_caption"
         app:layout_constraintLeft_toLeftOf="@id/left_guideline"/>
 
@@ -98,6 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/wind_speed_num"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/humidity_caption"
         app:layout_constraintLeft_toRightOf="@id/wind_speed_caption" />
     
@@ -116,7 +125,7 @@
         app:layout_constraintGuide_percent="0.85" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/weather_img"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/wind_speed_num"
@@ -125,5 +134,16 @@
         app:layout_constraintTop_toTopOf="@id/max_temp_num"
         app:srcCompat="@drawable/example_weather_img"
         tools:src="@drawable/example_weather_img" />
+
+    <Button
+        android:id="@+id/mock_location_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mock_location_btn"
+        android:textSize="8sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

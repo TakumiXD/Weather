@@ -1,4 +1,5 @@
 package com.example.weatherapp;
 
-public class MainPresenter {
+public class WeatherData {
+
 }
