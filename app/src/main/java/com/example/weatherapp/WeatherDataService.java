@@ -18,7 +18,7 @@ public class WeatherDataService {
 
     private Context context;
     private final String url = "https://api.openweathermap.org/data/2.5/weather";
-    private final String weatherKey = BuildConfig.WEATHER_KEY;
+    private final String weatherKey = "98d701b935327fa1cd69560c3f8d32c0";
 
     public WeatherDataService(Context context) {
         this.context = context;
