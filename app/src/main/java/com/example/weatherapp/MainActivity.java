@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public TextView humidity_num;
     public TextView wind_speed_num;
     public ImageView weather_img;
+    //testpush
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
