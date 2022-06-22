@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">WeatherApp</string>
-    <string name="city_name">My City</string>
-    <string name="temperature_num">0\u2109</string>
-    <string name="weather_caption">Weather</string>
+    <string name="city_name">Loading...</string>
+    <string name="temperature_num"></string>
+    <string name="weather_caption"></string>
     <string name="max_temp_caption">High:\u0020</string>
-    <string name="max_temp_num">0\u2109</string>
+    <string name="max_temp_num"></string>
     <string name="min_temp_caption">Low:\u0020</string>
-    <string name="min_temp_num">0\u2109</string>
+    <string name="min_temp_num"></string>
     <string name="humidity_caption">Humidity:\u0020</string>
-    <string name="humidity_num">0%</string>
+    <string name="humidity_num"></string>
     <string name="wind_speed_caption">Wind Speed:\u0020</string>
-    <string name="wind_speed_num">0mph</string>
+    <string name="wind_speed_num"></string>
     <string name="mock_location_btn">Mock Coordinates</string>
 </resources>

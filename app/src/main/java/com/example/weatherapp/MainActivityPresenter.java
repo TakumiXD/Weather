@@ -21,11 +21,12 @@ public class MainActivityPresenter {
 
     public void updateCoordinates(Pair<Double, Double> coordinates) {
         model.setCoordinates(coordinates);
+        updateUserLocationWeatherData();
     }
 
     @SuppressLint("SetTextI18n")
     public void onMockButtonClicked(View view) {
-        var inputType = EditorInfo.TYPE_CLASS_NUMBER
+        int inputType = EditorInfo.TYPE_CLASS_NUMBER
                 | EditorInfo.TYPE_NUMBER_FLAG_SIGNED
                 | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL;
 
@@ -43,14 +44,13 @@ public class MainActivityPresenter {
         layout.addView(latInput);
         layout.addView(lngInput);
 
-        var builder = new AlertDialog.Builder(activity)
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                 .setTitle("Mock Coordinates")
                 .setView(layout)
                 .setPositiveButton("Submit", (dialog, which) -> {
-                    var lat = Double.parseDouble(latInput.getText().toString());
-                    var lng = Double.parseDouble(lngInput.getText().toString());
+                    Double lat = Double.parseDouble(latInput.getText().toString());
+                    Double lng = Double.parseDouble(lngInput.getText().toString());
                     updateCoordinates(Pair.create(lat, lng));
-                    updateUserLocationWeatherData();
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> {
                     dialog.cancel();
@@ -60,16 +60,16 @@ public class MainActivityPresenter {
 
     public void updateUserLocationWeatherData() {
         WeatherDataService weatherDataService = new WeatherDataService(activity);
-        weatherDataService.getCurrentDataByLocation(model.getCoordinates(), new VolleyResponseListener() {
+        weatherDataService.getCurrentDataByLocation(model.getCoordinates().getValue(), new VolleyResponseListener() {
             @Override
             public void onResponse(CurrentWeatherData currentWeatherData) {
-                Log.d("MainActivityPresenter", "WeatherDataService.getCurrentData success");
+                Log.d("WeatherApp", "WeatherDataService.getCurrentData success");
                 activity.setCurrentWeatherDataDisplay(currentWeatherData);
             }
 
             @Override
             public void onError() {
-                Log.d("MainActivityPresenter", "WeatherDataService.getCurrentData failed");
+                Log.d("WeatherApp", "WeatherDataService.getCurrentData failed");
             }
         });
     }
