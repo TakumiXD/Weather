@@ -2,6 +2,7 @@ package com.example.weatherapp;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -11,20 +12,21 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
 
+import android.content.Context;
+import android.content.Intent;
+
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
-    @Rule
-    public ActivityScenarioRule<MainActivity> scenarioRule =
-            new ActivityScenarioRule<>(MainActivity.class);
-
     @Test
     public void testSetCurrentWeatherDataDisplay() {
-        ActivityScenario<MainActivity> scenario = scenarioRule.getScenario();
+        Context context = ApplicationProvider.getApplicationContext();
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(MainActivity.ENABLE_GPS_INTENT, false);
+        ActivityScenario<MainActivity> scenario = ActivityScenario.<MainActivity>launch(intent);
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            activity.TESTING = true;
             CurrentWeatherData randomCurrentWeatherData = new CurrentWeatherData
                     ("RandomCity", 100, "Weather", 105, 95, 10, 20, "01d");
             activity.setCurrentWeatherDataDisplay(randomCurrentWeatherData);
