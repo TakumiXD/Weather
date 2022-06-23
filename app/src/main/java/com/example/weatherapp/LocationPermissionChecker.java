@@ -31,11 +31,7 @@ public class LocationPermissionChecker {
     }
 
     public void ensurePermissions() {
-        boolean hasNoLocationPerms = Arrays.stream(requiredPermissions)
-                .map(permission -> ContextCompat.checkSelfPermission(activity, permission))
-                .allMatch(status -> status == PackageManager.PERMISSION_DENIED);
-
-        if (hasNoLocationPerms) {
+        if (!hasPermissions()) {
             requestPermissionLauncher.launch(requiredPermissions);
         }
     }
