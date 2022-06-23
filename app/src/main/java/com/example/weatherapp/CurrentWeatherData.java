@@ -1,6 +1,6 @@
 package com.example.weatherapp;
 
-public class CurrentWeatherData {
+public class CurrentWeatherData implements WeatherData {
     private String cityName;
     private double temperature;
     private String weather;

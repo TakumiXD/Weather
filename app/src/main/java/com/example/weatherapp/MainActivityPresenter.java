@@ -62,9 +62,9 @@ public class MainActivityPresenter {
         WeatherDataService weatherDataService = new WeatherDataService(activity);
         weatherDataService.getCurrentDataByLocation(model.getCoordinates().getValue(), new VolleyResponseListener() {
             @Override
-            public void onResponse(CurrentWeatherData currentWeatherData) {
+            public void onResponse(WeatherData weatherData) {
                 Log.d("WeatherApp", "WeatherDataService.getCurrentData success");
-                activity.setCurrentWeatherDataDisplay(currentWeatherData);
+                activity.setWeatherDataDisplay(weatherData, true);
             }
 
             @Override

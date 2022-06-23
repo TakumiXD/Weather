@@ -1,6 +1,6 @@
 package com.example.weatherapp;
 
 public interface VolleyResponseListener {
-    void onResponse(CurrentWeatherData currentWeatherData);
+    void onResponse(WeatherData weatherData);
     void onError();
 }

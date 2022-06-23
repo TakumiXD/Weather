@@ -12,4 +12,5 @@
     <string name="wind_speed_caption">Wind Speed:\u0020</string>
     <string name="wind_speed_num"></string>
     <string name="mock_location_btn">Mock Coordinates</string>
+    <string name="date_and_time"></string>
 </resources>

@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String IMG_URL_HEAD = "https://openweathermap.org/img/wn/";
     private static final String IMG_URL_TAIL = "@2x.png";
     public static final String ENABLE_GPS_INTENT = "ENABLE_GPS";
+    private static final int LOCATION_REFRESH_TIME = 600000;
+    private static final int LOCATION_REFRESH_DISTANCE = 0;
 
     public TextView city_name;
     public TextView temperature_num;
@@ -73,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void setWeatherDataDisplay(WeatherData weatherData, boolean changingCurrentData) {
+        if (changingCurrentData) {
+            setCurrentWeatherDataDisplay((CurrentWeatherData)weatherData);
+        }
+        else {
+
+        }
+    }
+
     public void setCurrentWeatherDataDisplay(CurrentWeatherData currentWeatherData) {
         city_name.setText(currentWeatherData.getCityName());
         temperature_num.setText("" + currentWeatherData.getTemperature() + "\u2109");
@@ -104,12 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         locationManager.requestLocationUpdates
-                (LocationManager.GPS_PROVIDER, 600000, 0f, locationListener);
-    }
-
-    @VisibleForTesting
-    public void turnOffGPS() {
-        ENABLE_GPS = false;
+                (LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME, LOCATION_REFRESH_DISTANCE, locationListener);
     }
 
     @VisibleForTesting
