@@ -3,6 +3,7 @@ package com.example.weatherapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("MissingPermission")
     private void setupLocationListener() {
-        // Update coordinates either every 10 minutes or when the device moves more than 100 meters
+        // Update coordinates every 10 minutes
         LocationManager locationManager =
                 (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         locationManager.requestLocationUpdates
-                (LocationManager.GPS_PROVIDER, 600000, 100f, locationListener);
+                (LocationManager.GPS_PROVIDER, 600000, 0f, locationListener);
     }
 
     @VisibleForTesting
