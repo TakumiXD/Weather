@@ -9,6 +9,13 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.example.weatherapp.weatherdata.CurrentWeatherData;
+import com.example.weatherapp.weatherdata.ForecastWeatherData;
+import com.example.weatherapp.weatherdata.VolleyResponseListener;
+import com.example.weatherapp.weatherdata.WeatherDataService;
+
+import java.util.List;
+
 public class MainActivityPresenter {
 
     private final MainActivity activity;
@@ -62,14 +69,28 @@ public class MainActivityPresenter {
         WeatherDataService weatherDataService = new WeatherDataService(activity);
         weatherDataService.getCurrentDataByLocation(model.getCoordinates().getValue(), new VolleyResponseListener() {
             @Override
-            public void onResponse(WeatherData weatherData) {
+            public void onResponse(CurrentWeatherData currentWeatherData,
+                                   List<ForecastWeatherData> forecastWeatherDataList) {
                 Log.d("WeatherApp", "WeatherDataService.getCurrentData success");
-                activity.setWeatherDataDisplay(weatherData, true);
+                activity.setCurrentWeatherDataDisplay(currentWeatherData);
             }
 
             @Override
             public void onError() {
                 Log.d("WeatherApp", "WeatherDataService.getCurrentData failed");
+            }
+        });
+        weatherDataService.getForecastByLocation(model.getCoordinates().getValue(), new VolleyResponseListener() {
+            @Override
+            public void onResponse(CurrentWeatherData currentWeatherData,
+                                   List<ForecastWeatherData> forecastWeatherDataList) {
+                Log.d("WeatherApp", "WeatherDataService.getForecast success");
+                activity.setForecastWeatherDataDisplay(forecastWeatherDataList);
+            }
+
+            @Override
+            public void onError() {
+                Log.d("WeatherApp", "WeatherDataService.getForecast failed");
             }
         });
     }
