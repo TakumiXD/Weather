@@ -1,4 +1,4 @@
-package com.example.weatherapp;
+package com.example.weatherapp.weatherdata;
 
 public class ForecastWeatherData implements WeatherData {
     private String dateAndTime;

@@ -1,4 +1,4 @@
-package com.example.weatherapp;
+package com.example.weatherapp.weatherdata;
 
 public interface WeatherData {
     public double getTemperature();

@@ -3,8 +3,9 @@ package com.example.weatherapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,11 +13,17 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.example.weatherapp.helper.ImgLoader;
+import com.example.weatherapp.location.LocationPermissionChecker;
+import com.example.weatherapp.weatherdata.CurrentWeatherData;
+import com.example.weatherapp.weatherdata.ForecastWeatherData;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public TextView humidity_num;
     public TextView wind_speed_num;
     public ImageView weather_img;
+    private RecyclerView forecast_data_list;
 
     // Boolean value that determines whether or not to enable GPS. Used for testing.
     private boolean ENABLE_GPS;
@@ -54,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         humidity_num = findViewById(R.id.humidity_num);
         wind_speed_num = findViewById(R.id.wind_speed_num);
         weather_img = findViewById(R.id.weather_img);
+        forecast_data_list = findViewById(R.id.forecast_data_list);
+        forecast_data_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         // Check intent extra to determine whether or not to enable GPS. Default value is true.
         ENABLE_GPS = getIntent().getBooleanExtra(ENABLE_GPS_INTENT, true);
@@ -75,15 +85,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setWeatherDataDisplay(WeatherData weatherData, boolean changingCurrentData) {
-        if (changingCurrentData) {
-            setCurrentWeatherDataDisplay((CurrentWeatherData)weatherData);
-        }
-        else {
-
-        }
-    }
-
     public void setCurrentWeatherDataDisplay(CurrentWeatherData currentWeatherData) {
         city_name.setText(currentWeatherData.getCityName());
         temperature_num.setText("" + currentWeatherData.getTemperature() + "\u2109");
@@ -94,9 +95,16 @@ public class MainActivity extends AppCompatActivity {
         wind_speed_num.setText(currentWeatherData.getWindSpeed() + "mph");
         if (ENABLE_GPS) {
             // load weather image based on weather and time of day
-            String fullURL = IMG_URL_HEAD + currentWeatherData.getWeatherIcon() + IMG_URL_TAIL;
-            Picasso.get().load(fullURL).into(weather_img);
+            ImgLoader.loadImg(currentWeatherData, weather_img);
         }
+    }
+
+    public void setForecastWeatherDataDisplay(List<ForecastWeatherData> forecastWeatherDataList) {
+        Log.d("errorcheck", ""+forecastWeatherDataList.size());
+        ForecastListAdapter adapter = new ForecastListAdapter(forecastWeatherDataList);
+        adapter.setHasStableIds(true);
+        forecast_data_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        forecast_data_list.setAdapter(adapter);
     }
 
     @SuppressLint("MissingPermission")

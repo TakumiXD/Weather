@@ -1,4 +1,4 @@
-package com.example.weatherapp;
+package com.example.weatherapp.weatherdata;
 
 import android.content.Context;
 import android.util.Log;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class WeatherDataService {
 
-    private Context context;
+    private final Context context;
 
     private static final String CURRENT_URL = "https://api.openweathermap.org/data/2.5/weather";
     private static final String FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast";
@@ -33,7 +33,8 @@ public class WeatherDataService {
         String fullUrl = CURRENT_URL + "?lat=" + coordinates.first + "&lon=" +
                 coordinates.second + "&appid=" + WEATHER_KEY + "&units=imperial";
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, fullUrl, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request =
+                new JsonObjectRequest(Request.Method.GET, fullUrl, null, new Response.Listener<>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -46,8 +47,8 @@ public class WeatherDataService {
                     currentWeatherData.setHumidity(response.getJSONObject("main").getDouble("humidity"));
                     currentWeatherData.setWindSpeed(response.getJSONObject("wind").getDouble("speed"));
                     currentWeatherData.setWeatherIcon(response.getJSONArray("weather").getJSONObject(0).getString("icon"));
-                    Log.d("WeatherApp", "JsonObjectRequest: " + currentWeatherData.toString());
-                    volleyResponseListener.onResponse(currentWeatherData);
+                    Log.d("WeatherApp", "JsonObjectRequest: " + currentWeatherData);
+                    volleyResponseListener.onResponse(currentWeatherData, null);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -66,14 +67,15 @@ public class WeatherDataService {
         String fullUrl = FORECAST_URL + "?lat=" + coordinates.first + "&lon=" + coordinates.second +
                 "&appid=" + WEATHER_KEY + "&units=imperial";
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, fullUrl, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request =
+                new JsonObjectRequest(Request.Method.GET, fullUrl, null, new Response.Listener<>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
                     int callSize = response.getInt("cnt");
-                    List<ForecastWeatherData> forecastWeatherDataArrayList = new ArrayList<>();
+                    List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
                     JSONArray list = response.getJSONArray("list");
-                    for (int i = 0; i < callSize; ++i) {
+                    for (int i = 0; i < callSize; i=i+2) {
                         JSONObject listObject = list.getJSONObject(i);
                         ForecastWeatherData forecastWeatherData = new ForecastWeatherData();
                         forecastWeatherData.setDateAndTime(listObject.getString("dt"));
@@ -83,8 +85,10 @@ public class WeatherDataService {
                                 .getJSONObject(0).getString("main"));
                         forecastWeatherData.setWeatherIcon(listObject.getJSONArray("weather")
                                 .getJSONObject(0).getString("icon"));
-                        forecastWeatherDataArrayList.add(forecastWeatherData);
+                        forecastWeatherDataList.add(forecastWeatherData);
+                        Log.d("WeatherApp", "JsonObjectRequest: " + forecastWeatherData);
                     }
+                    volleyResponseListener.onResponse(null, forecastWeatherDataList);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

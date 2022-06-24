@@ -3,10 +3,8 @@ package com.example.weatherapp;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -14,6 +12,8 @@ import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
 import android.content.Intent;
+
+import com.example.weatherapp.weatherdata.CurrentWeatherData;
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
