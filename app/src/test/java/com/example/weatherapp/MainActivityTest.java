@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.weatherapp.weatherdata.CurrentWeatherData;
+import com.example.weatherapp.weatherdata.ForecastWeatherData;
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
