@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setForecastWeatherDataDisplay(List<ForecastWeatherData> forecastWeatherDataList) {
-        Log.d("errorcheck", ""+forecastWeatherDataList.size());
         ForecastListAdapter adapter = new ForecastListAdapter(forecastWeatherDataList);
         adapter.setHasStableIds(true);
         forecast_data_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -129,6 +128,11 @@ public class MainActivity extends AppCompatActivity {
     @VisibleForTesting
     void mockCoordinates(Pair<Double, Double> coordinates) {
         presenter.updateCoordinates(coordinates);
+    }
+
+    @VisibleForTesting
+    RecyclerView getForecastDataList() {
+        return forecast_data_list;
     }
 
 }

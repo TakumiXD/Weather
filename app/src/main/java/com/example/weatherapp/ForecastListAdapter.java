@@ -14,11 +14,12 @@ import com.example.weatherapp.weatherdata.ForecastWeatherData;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapter.ViewHolder> {
 
-    private List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
+    private final List<ForecastWeatherData> forecastWeatherDataList;
 
     public ForecastListAdapter(List<ForecastWeatherData> forecastWeatherDataList) {
         this.forecastWeatherDataList = forecastWeatherDataList;
@@ -35,9 +36,9 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ForecastWeatherData forecastWeatherData = forecastWeatherDataList.get(position);
+        ForecastWeatherData forecastWeatherData = forecastWeatherDataList.get(holder.getAdapterPosition());
         holder.recycler_date_and_time.setText(forecastWeatherData.getDateAndTime());
-        holder.recycler_temperature.setText(""+forecastWeatherData.getTemperature());
+        holder.recycler_temperature.setText(""+forecastWeatherData.getTemperature() + "\u2109");
         holder.recycler_weather.setText(forecastWeatherData.getWeather());
         ImgLoader.loadImg(forecastWeatherData, holder.recycler_weather_img);
     }
@@ -45,6 +46,16 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
     @Override
     public int getItemCount() {
         return forecastWeatherDataList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

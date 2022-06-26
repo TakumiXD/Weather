@@ -78,9 +78,8 @@ public class WeatherDataService {
                     for (int i = 0; i < callSize; i=i+2) {
                         JSONObject listObject = list.getJSONObject(i);
                         ForecastWeatherData forecastWeatherData = new ForecastWeatherData();
-                        forecastWeatherData.setDateAndTime(listObject.getString("dt"));
-                        forecastWeatherData.setTemperature
-                                (listObject.getJSONObject("main").getDouble("temp"));
+                        forecastWeatherData.setDateAndTime(listObject.getString("dt_txt"));
+                        forecastWeatherData.setTemperature(listObject.getJSONObject("main").getDouble("temp"));
                         forecastWeatherData.setWeather(listObject.getJSONArray("weather")
                                 .getJSONObject(0).getString("main"));
                         forecastWeatherData.setWeatherIcon(listObject.getJSONArray("weather")
