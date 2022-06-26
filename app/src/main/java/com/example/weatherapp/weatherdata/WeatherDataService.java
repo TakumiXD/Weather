@@ -8,11 +8,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.weatherapp.helper.DateTimeConverter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,10 +77,11 @@ public class WeatherDataService {
                     int callSize = response.getInt("cnt");
                     List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
                     JSONArray list = response.getJSONArray("list");
-                    for (int i = 0; i < callSize; i=i+2) {
+                    for (int i = 0; i < callSize; ++i) {
                         JSONObject listObject = list.getJSONObject(i);
                         ForecastWeatherData forecastWeatherData = new ForecastWeatherData();
-                        forecastWeatherData.setDateAndTime(listObject.getString("dt_txt"));
+                        String jsonDateTime = listObject.getString("dt_txt");
+                        forecastWeatherData.setDateAndTime(DateTimeConverter.jsonDateTimeToAppDateTime(jsonDateTime));
                         forecastWeatherData.setTemperature(listObject.getJSONObject("main").getDouble("temp"));
                         forecastWeatherData.setWeather(listObject.getJSONArray("weather")
                                 .getJSONObject(0).getString("main"));
@@ -89,6 +92,8 @@ public class WeatherDataService {
                     }
                     volleyResponseListener.onResponse(null, forecastWeatherDataList);
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
