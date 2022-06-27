@@ -16,6 +16,9 @@ import android.content.Intent;
 import com.example.weatherapp.weatherdata.CurrentWeatherData;
 import com.example.weatherapp.weatherdata.ForecastWeatherData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
@@ -38,6 +41,23 @@ public class MainActivityTest {
             assertEquals(activity.min_temp_num.getText(), "95.0\u2109");
             assertEquals(activity.humidity_num.getText(), "10.0%");
             assertEquals(activity.wind_speed_num.getText(), "20.0mph");
+        });
+    }
+
+    @Test
+    public void testSetForecastWeatherDataDisplay() {
+        Context context = ApplicationProvider.getApplicationContext();
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(MainActivity.ENABLE_GPS_INTENT, false);
+        ActivityScenario<MainActivity> scenario = ActivityScenario.<MainActivity>launch(intent);
+        scenario.moveToState(Lifecycle.State.CREATED);
+
+        scenario.onActivity(activity -> {
+            ForecastWeatherData expectedForecastWeatherData = new ForecastWeatherData("2022-06-26 18:00:00", 100, "Weather", "01d");
+            List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
+            forecastWeatherDataList.add(expectedForecastWeatherData);
+            activity.setForecastWeatherDataDisplay(forecastWeatherDataList);
+            assertEquals(expectedForecastWeatherData, activity.getAdapter().getForecastWeatherDataList().get(0));
         });
     }
 }
