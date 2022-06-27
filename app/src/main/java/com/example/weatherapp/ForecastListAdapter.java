@@ -1,5 +1,6 @@
 package com.example.weatherapp;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,18 @@ import java.util.List;
 
 public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapter.ViewHolder> {
 
-    private final List<ForecastWeatherData> forecastWeatherDataList;
+    private List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
+    private boolean ENABLE_GPS;
 
-    public ForecastListAdapter(List<ForecastWeatherData> forecastWeatherDataList) {
-        this.forecastWeatherDataList = forecastWeatherDataList;
+    public ForecastListAdapter(boolean ENABLE_GPS) {
+        this.setHasStableIds(true);
+        this.ENABLE_GPS = ENABLE_GPS;
+    }
+
+    public void setForecastWeatherDataList(List<ForecastWeatherData> forecastWeatherDataList) {
+        this.forecastWeatherDataList.clear();
+        this.forecastWeatherDataList.addAll(forecastWeatherDataList);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -40,7 +49,9 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         holder.recycler_date_and_time.setText(forecastWeatherData.getDateAndTime());
         holder.recycler_temperature.setText(""+forecastWeatherData.getTemperature() + "\u2109");
         holder.recycler_weather.setText(forecastWeatherData.getWeather());
-        ImgLoader.loadImg(forecastWeatherData, holder.recycler_weather_img);
+        if (ENABLE_GPS) {
+            ImgLoader.loadImg(forecastWeatherData, holder.recycler_weather_img);
+        }
     }
 
     @Override
