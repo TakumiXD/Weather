@@ -132,6 +132,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @VisibleForTesting
+    ForecastListAdapter getAdapter() {
+        return adapter;
+    }
+
+    @VisibleForTesting
     RecyclerView getForecastDataList() {
         return forecast_data_list;
     }

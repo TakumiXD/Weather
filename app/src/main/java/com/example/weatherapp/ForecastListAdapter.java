@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.weatherapp.helper.ImgLoader;
@@ -66,7 +67,12 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
 
     @Override
     public int getItemViewType(int position) {
-        return position;
+        return R.layout.forecast_data_item;
+    }
+
+    @VisibleForTesting
+    public List<ForecastWeatherData> getForecastWeatherDataList() {
+        return forecastWeatherDataList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

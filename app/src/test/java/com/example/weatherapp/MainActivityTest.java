@@ -1,8 +1,6 @@
 package com.example.weatherapp;
 
-import androidx.appcompat.view.menu.MenuView;
 import androidx.lifecycle.Lifecycle;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -11,12 +9,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
-import android.widget.TextView;
 
 import com.example.weatherapp.weatherdata.CurrentWeatherData;
 import com.example.weatherapp.weatherdata.ForecastWeatherData;
@@ -49,37 +44,20 @@ public class MainActivityTest {
         });
     }
 
-//    @Test
-//    public void testSetForecastWeatherDataDisplay() {
-//        Context context = ApplicationProvider.getApplicationContext();
-//        Intent intent = new Intent(context, MainActivity.class);
-//        intent.putExtra(MainActivity.ENABLE_GPS_INTENT, false);
-//        ArrayList<String> forecastWeatherDataAL = new ArrayList<>();
-//        forecastWeatherDataAL.add("2022-06-26 18:00:00");
-//        forecastWeatherDataAL.add("100");
-//        forecastWeatherDataAL.add("Weather");
-//        forecastWeatherDataAL.add("01d");
-//        intent.putExtra("doit", true);
-//        intent.putExtra("array", forecastWeatherDataAL);
-//        ActivityScenario<MainActivity> scenario = ActivityScenario.<MainActivity>launch(intent);
-//        scenario.moveToState(Lifecycle.State.CREATED);
-//
-//        scenario.onActivity(activity -> {
-//            RecyclerView.ViewHolder viewHolder = activity.forecast_data_list.findViewHolderForAdapterPosition(0);
-//            View view = activity.getForecastDataList().getLayoutManager().findViewByPosition(0);
-//            assertEquals(((TextView)view.findViewById(R.id.recycler_date_and_time)).getText(), "Sunday 5 PM");
-//            assertEquals(((TextView)viewHolder.itemView.findViewById(R.id.recycler_temperature)).getText(), "100.0\u2109");
-//            assertEquals(((TextView)viewHolder.itemView.findViewById(R.id.recycler_weather)).getText(), "Weather");
-//        });
-//
-////        ForecastWeatherData forecastWeatherData = new ForecastWeatherData("2022-06-26 18:00:00", 100, "Weather", "01d");
-////        List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
-////        forecastWeatherDataList.add(forecastWeatherData);
-////        activity.setForecastWeatherDataDisplay(forecastWeatherDataList);
-////        RecyclerView.ViewHolder viewHolder = activity.forecast_data_list.findViewHolderForAdapterPosition(0);
-////        View view = activity.getForecastDataList().getLayoutManager().findViewByPosition(0);
-////        assertEquals(((TextView)view.findViewById(R.id.recycler_date_and_time)).getText(), "Sunday 5 PM");
-//////            assertEquals(((TextView)viewHolder.itemView.findViewById(R.id.recycler_temperature)).getText(), "100.0\u2109");
-//////            assertEquals(((TextView)viewHolder.itemView.findViewById(R.id.recycler_weather)).getText(), "Weather");
-//    }
+    @Test
+    public void testSetForecastWeatherDataDisplay() {
+        Context context = ApplicationProvider.getApplicationContext();
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(MainActivity.ENABLE_GPS_INTENT, false);
+        ActivityScenario<MainActivity> scenario = ActivityScenario.<MainActivity>launch(intent);
+        scenario.moveToState(Lifecycle.State.CREATED);
+
+        scenario.onActivity(activity -> {
+            ForecastWeatherData expectedForecastWeatherData = new ForecastWeatherData("2022-06-26 18:00:00", 100, "Weather", "01d");
+            List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
+            forecastWeatherDataList.add(expectedForecastWeatherData);
+            activity.setForecastWeatherDataDisplay(forecastWeatherDataList);
+            assertEquals(expectedForecastWeatherData, activity.getAdapter().getForecastWeatherDataList().get(0));
+        });
+    }
 }
