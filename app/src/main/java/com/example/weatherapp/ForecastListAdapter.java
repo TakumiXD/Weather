@@ -1,6 +1,7 @@
 package com.example.weatherapp;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.forecast_data_item, parent, false);
+        Log.d("notifyDataSetChanged", "onCreateViewHolder called");
         return new ViewHolder(view);
     }
 
@@ -45,6 +47,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         if (ENABLE_GPS) {
             ImgLoader.loadImg(forecastWeatherData, holder.ivWeatherImg);
         }
+        Log.d("notifyDataSetChanged", "onBindViewHolder called" + position);
     }
 
     @Override
@@ -59,7 +62,8 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
 
     @Override
     public int getItemViewType(int position) {
-        return R.layout.forecast_data_item;
+        Log.d("notifyDataSetChanged", "getItemViewType called" + position);
+        return position;
     }
 
     @VisibleForTesting
@@ -72,6 +76,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         this.forecastWeatherDataList.clear();
         this.forecastWeatherDataList.addAll(forecastWeatherDataList);
         notifyDataSetChanged();
+        Log.d("notifyDataSetChanged", "notifyDataSetChanged called");
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
