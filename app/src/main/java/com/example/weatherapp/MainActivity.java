@@ -13,7 +13,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,31 +22,32 @@ import com.example.weatherapp.location.LocationPermissionChecker;
 import com.example.weatherapp.weatherdata.CurrentWeatherData;
 import com.example.weatherapp.weatherdata.ForecastWeatherData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Boolean value that determines whether or not to enable GPS. Used for testing.
+    private boolean ENABLE_GPS;
+
     private MainActivityPresenter presenter;
-    private LocationPermissionChecker locationPermissionChecker;
+
+    public TextView tvCityName;
+    public TextView tvTemperatureNum;
+    public TextView tvWeather;
+    public TextView tvMaxTempNum;
+    public TextView tvMinTempNum;
+    public TextView tvHumidityNum;
+    public TextView tvWindSpeedNum;
+    public ImageView ivWeatherImg;
+    public RecyclerView rvForecastDataList;
+    public ForecastListAdapter forecastListAdapter;
 
     public static final String ENABLE_GPS_INTENT = "ENABLE_GPS";
     private static final int LOCATION_REFRESH_TIME = 600000;
     private static final int LOCATION_REFRESH_DISTANCE = 0;
-
-    public TextView city_name;
-    public TextView temperature_num;
-    public TextView weather_caption;
-    public TextView max_temp_num;
-    public TextView min_temp_num;
-    public TextView humidity_num;
-    public TextView wind_speed_num;
-    public ImageView weather_img;
-    public RecyclerView forecast_data_list;
-    public ForecastListAdapter adapter;
-
-    // Boolean value that determines whether or not to enable GPS. Used for testing.
-    private boolean ENABLE_GPS;
+    private static final String FAHRENHEIT_SYMBOL = "\u2109";
+    private static final String PERCENT_SYMBOL = "%";
+    private static final String MPH_SYMBOL = "mph";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +58,19 @@ public class MainActivity extends AppCompatActivity {
         ENABLE_GPS = getIntent().getBooleanExtra(ENABLE_GPS_INTENT, true);
 
         setContentView(R.layout.activity_main);
-        city_name = findViewById(R.id.city_name);
-        temperature_num = findViewById(R.id.temperature_num);
-        weather_caption = findViewById(R.id.weather_caption);
-        max_temp_num = findViewById(R.id.max_temp_num);
-        min_temp_num = findViewById(R.id.min_temp_num);
-        humidity_num = findViewById(R.id.humidity_num);
-        wind_speed_num = findViewById(R.id.wind_speed_num);
-        weather_img = findViewById(R.id.weather_img);
+        tvCityName = findViewById(R.id.city_name);
+        tvTemperatureNum = findViewById(R.id.temperature_num);
+        tvWeather = findViewById(R.id.weather);
+        tvMaxTempNum = findViewById(R.id.max_temp_num);
+        tvMinTempNum = findViewById(R.id.min_temp_num);
+        tvHumidityNum = findViewById(R.id.humidity_num);
+        tvWindSpeedNum = findViewById(R.id.wind_speed_num);
+        ivWeatherImg = findViewById(R.id.weather_img);
 
-        forecast_data_list = findViewById(R.id.forecast_data_list);
-        adapter = new ForecastListAdapter(ENABLE_GPS);
-        forecast_data_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        forecast_data_list.setAdapter(adapter);
+        rvForecastDataList = findViewById(R.id.forecast_data_list);
+        forecastListAdapter = new ForecastListAdapter(ENABLE_GPS);
+        rvForecastDataList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvForecastDataList.setAdapter(forecastListAdapter);
 
         // Set up MVP
         MainActivityModel model = new ViewModelProvider(this).get(MainActivityModel.class);
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.mock_location_btn).setOnClickListener(presenter::onMockButtonClicked);
 
         if (ENABLE_GPS) {
-            locationPermissionChecker = new LocationPermissionChecker(this);
+            LocationPermissionChecker locationPermissionChecker = new LocationPermissionChecker(this);
             locationPermissionChecker.ensurePermissions();
             // infinite loop until location permissions are granted by user
             while (!locationPermissionChecker.hasPermissions()) {
@@ -90,21 +90,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setCurrentWeatherDataDisplay(CurrentWeatherData currentWeatherData) {
-        city_name.setText(currentWeatherData.getCityName());
-        temperature_num.setText("" + currentWeatherData.getTemperature() + "\u2109");
-        weather_caption.setText(currentWeatherData.getWeather());
-        max_temp_num.setText("" + currentWeatherData.getMaxTemperature() + "\u2109");
-        min_temp_num.setText("" + currentWeatherData.getMinTemperature() + "\u2109");
-        humidity_num.setText("" + currentWeatherData.getHumidity() + "%");
-        wind_speed_num.setText(currentWeatherData.getWindSpeed() + "mph");
+        tvCityName.setText(currentWeatherData.getCityName());
+        tvTemperatureNum.setText(currentWeatherData.getTemperature() + FAHRENHEIT_SYMBOL);
+        tvWeather.setText(currentWeatherData.getWeather());
+        tvMaxTempNum.setText(currentWeatherData.getMaxTemperature() + FAHRENHEIT_SYMBOL);
+        tvMinTempNum.setText(currentWeatherData.getMinTemperature() + FAHRENHEIT_SYMBOL);
+        tvHumidityNum.setText(currentWeatherData.getHumidity() + PERCENT_SYMBOL);
+        tvWindSpeedNum.setText(currentWeatherData.getWindSpeed() + MPH_SYMBOL);
         if (ENABLE_GPS) {
             // load weather image based on weather and time of day
-            ImgLoader.loadImg(currentWeatherData, weather_img);
+            ImgLoader.loadImg(currentWeatherData, ivWeatherImg);
         }
     }
 
     public void setForecastWeatherDataDisplay(List<ForecastWeatherData> forecastWeatherDataList) {
-        adapter.setForecastWeatherDataList(forecastWeatherDataList);
+        forecastListAdapter.setForecastWeatherDataList(forecastWeatherDataList);
+        forecastListAdapter.notifyDataSetChanged();
     }
 
     @SuppressLint("MissingPermission")
@@ -132,13 +133,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @VisibleForTesting
-    ForecastListAdapter getAdapter() {
-        return adapter;
-    }
-
-    @VisibleForTesting
-    RecyclerView getForecastDataList() {
-        return forecast_data_list;
+    ForecastListAdapter getForecastListAdapter() {
+        return forecastListAdapter;
     }
 
 }

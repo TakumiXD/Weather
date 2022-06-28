@@ -34,16 +34,22 @@ public class MainActivityTest {
             CurrentWeatherData randomCurrentWeatherData = new CurrentWeatherData
                     ("RandomCity", 100, "Weather", 105, 95, 10, 20, "01d");
             activity.setCurrentWeatherDataDisplay(randomCurrentWeatherData);
-            assertEquals(activity.city_name.getText(), "RandomCity");
-            assertEquals(activity.temperature_num.getText(), "100.0\u2109");
-            assertEquals(activity.weather_caption.getText(), "Weather");
-            assertEquals(activity.max_temp_num.getText(), "105.0\u2109");
-            assertEquals(activity.min_temp_num.getText(), "95.0\u2109");
-            assertEquals(activity.humidity_num.getText(), "10.0%");
-            assertEquals(activity.wind_speed_num.getText(), "20.0mph");
+            assertEquals(activity.tvCityName.getText(), "RandomCity");
+            assertEquals(activity.tvTemperatureNum.getText(), "100.0\u2109");
+            assertEquals(activity.tvWeather.getText(), "Weather");
+            assertEquals(activity.tvMaxTempNum.getText(), "105.0\u2109");
+            assertEquals(activity.tvMinTempNum.getText(), "95.0\u2109");
+            assertEquals(activity.tvHumidityNum.getText(), "10.0%");
+            assertEquals(activity.tvWindSpeedNum.getText(), "20.0mph");
         });
     }
 
+    /**
+     * For some strange reason, notifyDataSetChanged in ForecastListAdapter does not call
+     * onBindViewHolder during unit testing (but calls when using the app on an emulator).
+     * This makes testing using TextView.getText() impossible. Therefore, instead this function tests
+     * whether the adapter was able to retrieve the List of forecast weathers.
+     */
     @Test
     public void testSetForecastWeatherDataDisplay() {
         Context context = ApplicationProvider.getApplicationContext();
@@ -57,7 +63,7 @@ public class MainActivityTest {
             List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
             forecastWeatherDataList.add(expectedForecastWeatherData);
             activity.setForecastWeatherDataDisplay(forecastWeatherDataList);
-            assertEquals(expectedForecastWeatherData, activity.getAdapter().getForecastWeatherDataList().get(0));
+            assertEquals(expectedForecastWeatherData, activity.getForecastListAdapter().getForecastWeatherDataList().get(0));
         });
     }
 }

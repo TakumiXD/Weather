@@ -2,7 +2,7 @@
     <string name="app_name">WeatherApp</string>
     <string name="city_name">Loading...</string>
     <string name="temperature_num"></string>
-    <string name="weather_caption"></string>
+    <string name="weather"></string>
     <string name="max_temp_caption">High:\u0020</string>
     <string name="max_temp_num"></string>
     <string name="min_temp_caption">Low:\u0020</string>
