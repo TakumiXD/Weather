@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void setForecastWeatherDataDisplay(List<ForecastWeatherData> forecastWeatherDataList) {
         forecastListAdapter.setForecastWeatherDataList(forecastWeatherDataList);
-        forecastListAdapter.notifyDataSetChanged();
     }
 
     @SuppressLint("MissingPermission")
