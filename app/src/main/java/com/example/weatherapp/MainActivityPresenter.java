@@ -72,7 +72,6 @@ public class MainActivityPresenter {
     public void onSearchButtonClicked(View view) {
         String searchBarText = activity.getEtSearchBar().getText().toString();
         activity.disableGPS();
-        currentSearchedCityName = searchBarText;
         updateSearchedWeatherData(searchBarText);
         Log.d("WeatherApp", "Search Button  with: " + searchBarText);
     }
@@ -109,6 +108,7 @@ public class MainActivityPresenter {
     }
 
     public void updateSearchedWeatherData(String cityName) {
+        currentSearchedCityName = cityName;
         WeatherDataService weatherDataService = new WeatherDataService(activity);
         weatherDataService.getCurrentDataByCityName(cityName, new VolleyResponseListener() {
             @Override
@@ -118,6 +118,7 @@ public class MainActivityPresenter {
             }
             @Override
             public void onError() {
+                activity.displayErrorMessage();
                 Log.d("WeatherApp", "WeatherDataService.getCurrentData failed");
             }
         });
