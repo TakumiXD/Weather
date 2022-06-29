@@ -65,6 +65,13 @@ public class MainActivityPresenter {
         builder.show();
     }
 
+    public void onSearchButtonClicked(View view) {
+        String searchBarText = activity.getEtSearchBar().getText().toString();
+        Log.d("WeatherApp", "Search Button  with: " + searchBarText);
+        activity.disableGPS();
+        updateSearchedWeatherData(searchBarText);
+    }
+
     public void updateUserLocationWeatherData() {
         WeatherDataService weatherDataService = new WeatherDataService(activity);
         weatherDataService.getCurrentDataByLocation(model.getCoordinates().getValue(), new VolleyResponseListener() {
@@ -94,6 +101,32 @@ public class MainActivityPresenter {
             }
         });
         activity.enableAppBarLayout();
+    }
+
+    public void updateSearchedWeatherData(String cityName) {
+        WeatherDataService weatherDataService = new WeatherDataService(activity);
+        weatherDataService.getCurrentDataByCityName(cityName, new VolleyResponseListener() {
+            @Override
+            public void onResponse(CurrentWeatherData currentWeatherData, List<ForecastWeatherData> forecastWeatherDataList) {
+                activity.setCurrentWeatherDataDisplay(currentWeatherData);
+                Log.d("WeatherApp", "WeatherDataService.getCurrentData success");
+            }
+            @Override
+            public void onError() {
+                Log.d("WeatherApp", "WeatherDataService.getCurrentData failed");
+            }
+        });
+        weatherDataService.getForecastByCityName(cityName, new VolleyResponseListener() {
+            @Override
+            public void onResponse(CurrentWeatherData currentWeatherData, List<ForecastWeatherData> forecastWeatherDataList) {
+                Log.d("WeatherApp", "WeatherDataService.getForecast success");
+                activity.setForecastWeatherDataDisplay(forecastWeatherDataList);
+            }
+            @Override
+            public void onError() {
+                Log.d("WeatherApp", "WeatherDataService.getForecast failed");
+            }
+        });
     }
 
 }
