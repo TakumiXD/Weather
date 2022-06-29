@@ -12,8 +12,11 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
     private MainActivityPresenter presenter;
 
+    AppBarLayout appBarLayout;
+    TextView tvSearchBar;
+    ImageButton ibSearchButton;
     public TextView tvCityName;
     public TextView tvTemperatureNum;
     public TextView tvWeather;
@@ -58,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         ENABLE_GPS = getIntent().getBooleanExtra(ENABLE_GPS_INTENT, true);
 
         setContentView(R.layout.activity_main);
+        appBarLayout = findViewById(R.id.app_bar_layout);
+        tvSearchBar = findViewById(R.id.search_bar);
+        ibSearchButton = findViewById(R.id.search_button);
         tvCityName = findViewById(R.id.city_name);
         tvTemperatureNum = findViewById(R.id.temperature_num);
         tvWeather = findViewById(R.id.weather);
@@ -72,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         rvForecastDataList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvForecastDataList.setAdapter(forecastListAdapter);
 
-        AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
         appBarLayout.setOutlineProvider(null);
+        disableAppBarLayout();
 
         // Set up MVP
         MainActivityModel model = new ViewModelProvider(this).get(MainActivityModel.class);
@@ -90,6 +99,18 @@ public class MainActivity extends AppCompatActivity {
             // when permissions are granted, set up location listener
             setupLocationListener();
         }
+    }
+
+    private void disableAppBarLayout() {
+        appBarLayout.setEnabled(false);
+        tvSearchBar.setEnabled(false);
+        ibSearchButton.setEnabled(false);
+    }
+
+    public void enableAppBarLayout() {
+        appBarLayout.setEnabled(true);
+        tvSearchBar.setEnabled(true);
+        ibSearchButton.setEnabled(true);
     }
 
     public void setCurrentWeatherDataDisplay(CurrentWeatherData currentWeatherData) {

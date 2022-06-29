@@ -30,10 +30,10 @@
                 android:hint="Search by city name"
                 android:background="@null"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/search_img"/>
+                app:layout_constraintEnd_toStartOf="@id/search_button"/>
 
-            <ImageView
-                android:id="@+id/search_img"
+            <ImageButton
+                android:id="@+id/search_button"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0"
@@ -47,7 +47,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:layout_constraintStart_toEndOf="@id/search_img"
+                app:layout_constraintStart_toEndOf="@id/search_button"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             </LinearLayout>

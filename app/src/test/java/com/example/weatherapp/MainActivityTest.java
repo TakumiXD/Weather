@@ -50,7 +50,7 @@ public class MainActivityTest {
      * onCreateViewHolder, onBindViewHolder(), and other functions during unit testing (but calls
      * them when using the app on an emulator). This makes testing using TextView.getText()
      * impossible. Therefore, instead, this function tests whether the adapter was able to set the
-     * List of forecast weathers through setforecastWeatherDataList(). If the adapter was able to
+     * List of forecast weathers through setForecastWeatherDataList(). If the adapter was able to
      * set forecastWeatherDataList, it means that after the setter calls notifyDataSetChanged()
      * the ViewHolders should be created.
      */
