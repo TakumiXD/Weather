@@ -9,6 +9,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import androidx.annotation.VisibleForTesting;
+
 import com.example.weatherapp.weatherdata.CurrentWeatherData;
 import com.example.weatherapp.weatherdata.ForecastWeatherData;
 import com.example.weatherapp.weatherdata.VolleyResponseListener;
@@ -20,6 +22,8 @@ public class MainActivityPresenter {
 
     private final MainActivity activity;
     private final MainActivityModel model;
+
+    public String currentSearchedCityName = "";
 
     public MainActivityPresenter(MainActivity activity, MainActivityModel model) {
         this.activity = activity;
@@ -68,6 +72,7 @@ public class MainActivityPresenter {
     public void onSearchButtonClicked(View view) {
         String searchBarText = activity.getEtSearchBar().getText().toString();
         activity.disableGPS();
+        currentSearchedCityName = searchBarText;
         updateSearchedWeatherData(searchBarText);
         Log.d("WeatherApp", "Search Button  with: " + searchBarText);
     }
@@ -129,4 +134,8 @@ public class MainActivityPresenter {
         });
     }
 
+    @VisibleForTesting
+    public String getCurrentSearchedCityName() {
+        return currentSearchedCityName;
+    }
 }

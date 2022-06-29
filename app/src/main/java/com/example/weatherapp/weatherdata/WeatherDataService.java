@@ -7,7 +7,6 @@ import android.util.Pair;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.weatherapp.helper.DateTimeConverter;
 
@@ -26,7 +25,7 @@ public class WeatherDataService {
     private static final String CURRENT_URL = "https://api.openweathermap.org/data/2.5/weather";
     private static final String FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast";
     private static final String WEATHER_KEY = "98d701b935327fa1cd69560c3f8d32c0";
-    private static final int NUM_OF_LOCATIONS = 1;
+    private static final String UNITS = "imperial";
 
     public WeatherDataService(Context context) {
         this.context = context;
@@ -104,23 +103,23 @@ public class WeatherDataService {
 
     public void getCurrentDataByLocation(Pair<Double, Double> coordinates, VolleyResponseListener volleyResponseListener) {
         String url = CURRENT_URL + "?lat=" + coordinates.first + "&lon=" +
-                coordinates.second + "&appid=" + WEATHER_KEY + "&units=imperial";
+                coordinates.second + "&appid=" + WEATHER_KEY + "&units=" + UNITS;
         getCurrentData(url, volleyResponseListener);
     }
 
     public void getCurrentDataByCityName(String cityName, VolleyResponseListener volleyResponseListener) {
-        String url = CURRENT_URL + "?q=" + cityName + "&appid=" + WEATHER_KEY + "&units=imperial";
+        String url = CURRENT_URL + "?q=" + cityName + "&appid=" + WEATHER_KEY + "&units=" + UNITS;
         getCurrentData(url, volleyResponseListener);
     }
 
     public void getForecastDataByLocation(Pair<Double, Double> coordinates, VolleyResponseListener volleyResponseListener) {
         String url = FORECAST_URL + "?lat=" + coordinates.first + "&lon=" + coordinates.second +
-                "&appid=" + WEATHER_KEY + "&units=imperial";
+                "&appid=" + WEATHER_KEY + "&units=" + UNITS;
         getForecastData(url, volleyResponseListener);
     }
 
     public void getForecastDataByCityName(String cityName, VolleyResponseListener volleyResponseListener) {
-        String url = FORECAST_URL + "?q=" + cityName + "&appid=" + WEATHER_KEY + "&units=imperial";
+        String url = FORECAST_URL + "?q=" + cityName + "&appid=" + WEATHER_KEY + "&units=" + UNITS;
         getForecastData(url, volleyResponseListener);
     }
 
