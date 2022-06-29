@@ -93,6 +93,7 @@ public class MainActivityPresenter {
                 Log.d("WeatherApp", "WeatherDataService.getForecast failed");
             }
         });
+        activity.enableAppBarLayout();
     }
 
 }

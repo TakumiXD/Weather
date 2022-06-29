@@ -12,8 +12,11 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ import com.example.weatherapp.helper.ImgLoader;
 import com.example.weatherapp.location.LocationPermissionChecker;
 import com.example.weatherapp.weatherdata.CurrentWeatherData;
 import com.example.weatherapp.weatherdata.ForecastWeatherData;
+import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.List;
 
@@ -31,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
     private MainActivityPresenter presenter;
 
+    AppBarLayout appBarLayout;
+    TextView tvSearchBar;
+    ImageButton ibSearchButton;
     public TextView tvCityName;
     public TextView tvTemperatureNum;
     public TextView tvWeather;
@@ -45,19 +52,21 @@ public class MainActivity extends AppCompatActivity {
     public static final String ENABLE_GPS_INTENT = "ENABLE_GPS";
     private static final int LOCATION_REFRESH_TIME = 600000;
     private static final int LOCATION_REFRESH_DISTANCE = 0;
-    private static final String FAHRENHEIT_SYMBOL = "\u2109";
+    private static final String FAHRENHEIT_SYMBOL = "\u00B0";
     private static final String PERCENT_SYMBOL = "%";
     private static final String MPH_SYMBOL = "mph";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Weather");
 
         // Check intent extra to determine whether or not to enable GPS. Default value is true.
         ENABLE_GPS = getIntent().getBooleanExtra(ENABLE_GPS_INTENT, true);
 
         setContentView(R.layout.activity_main);
+        appBarLayout = findViewById(R.id.app_bar_layout);
+        tvSearchBar = findViewById(R.id.search_bar);
+        ibSearchButton = findViewById(R.id.search_button);
         tvCityName = findViewById(R.id.city_name);
         tvTemperatureNum = findViewById(R.id.temperature_num);
         tvWeather = findViewById(R.id.weather);
@@ -71,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
         forecastListAdapter = new ForecastListAdapter(ENABLE_GPS);
         rvForecastDataList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvForecastDataList.setAdapter(forecastListAdapter);
+
+        appBarLayout.setOutlineProvider(null);
+        disableAppBarLayout();
 
         // Set up MVP
         MainActivityModel model = new ViewModelProvider(this).get(MainActivityModel.class);
@@ -87,6 +99,18 @@ public class MainActivity extends AppCompatActivity {
             // when permissions are granted, set up location listener
             setupLocationListener();
         }
+    }
+
+    private void disableAppBarLayout() {
+        appBarLayout.setEnabled(false);
+        tvSearchBar.setEnabled(false);
+        ibSearchButton.setEnabled(false);
+    }
+
+    public void enableAppBarLayout() {
+        appBarLayout.setEnabled(true);
+        tvSearchBar.setEnabled(true);
+        ibSearchButton.setEnabled(true);
     }
 
     public void setCurrentWeatherDataDisplay(CurrentWeatherData currentWeatherData) {
