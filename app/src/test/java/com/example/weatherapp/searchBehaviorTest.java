@@ -29,11 +29,11 @@ public class searchBehaviorTest {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            activity.etSearchBar.requestFocus();
-            activity.etSearchBar.setText(BASIC_CITY);
-            activity.etSearchBar.clearFocus();
+            activity.getEtSearchBar().requestFocus();
+            activity.getEtSearchBar().setText(BASIC_CITY);
+            activity.getEtSearchBar().clearFocus();
             assertEquals(BASIC_CITY, activity.getEtSearchBar().getText().toString());
-            activity.ibSearchButton.performClick();
+            activity.getIbSearchButton().performClick();
             assertEquals(BASIC_CITY, activity.getPresenter().getCurrentSearchedCityName());
         });
     }
@@ -47,12 +47,12 @@ public class searchBehaviorTest {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            activity.etSearchBar.requestFocus();
-            activity.etSearchBar.setText(LONG_CITY);
-            activity.etSearchBar.clearFocus();
+            activity.getEtSearchBar().requestFocus();
+            activity.getEtSearchBar().setText(LONG_CITY);
+            activity.getEtSearchBar().clearFocus();
             assertFalse(activity.getEtSearchBar().getText().toString().contains(NEW_LINE));
             assertEquals(LONG_CITY, activity.getEtSearchBar().getText().toString());
-            activity.ibSearchButton.performClick();
+            activity.getIbSearchButton().performClick();
             assertFalse(activity.getPresenter().getCurrentSearchedCityName().contains(NEW_LINE));
             assertEquals(LONG_CITY, activity.getPresenter().getCurrentSearchedCityName());
         });

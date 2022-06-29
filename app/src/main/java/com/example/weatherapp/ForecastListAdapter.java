@@ -48,7 +48,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         if (ENABLE_GPS) {
             ImgLoader.loadImg(forecastWeatherData, holder.ivWeatherImg);
         }
-        Log.d("notifyDataSetChanged", "onBindViewHolder called" + position);
+        Log.d("notifyDataSetChanged", "onBindViewHolder called with position " + position);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
 
     @Override
     public int getItemViewType(int position) {
-        Log.d("notifyDataSetChanged", "getItemViewType called" + position);
+        Log.d("notifyDataSetChanged", "getItemViewType called with position " + position);
         return position;
     }
 

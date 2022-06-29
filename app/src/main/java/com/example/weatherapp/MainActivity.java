@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private LocationListener locationListener;
 
-    public AppBarLayout appBarLayout;
-    public EditText etSearchBar;
-    public ImageButton ibSearchButton;
+    private AppBarLayout appBarLayout;
+    private EditText etSearchBar;
+    private ImageButton ibSearchButton;
     private TextView tvCityName;
     private TextView tvTemperatureNum;
     private TextView tvWeather;
@@ -172,20 +172,25 @@ public class MainActivity extends AppCompatActivity {
         if (ENABLE_GPS) {
             locationManager.removeUpdates(locationListener);
         }
-        //locationManager = null;
     }
 
     public void enableGPS() {
         setupLocationListener();
     }
 
+    @VisibleForTesting
+    void mockCoordinates(Pair<Double, Double> coordinates) {
+        presenter.updateCoordinates(coordinates);
+    }
+
+    @VisibleForTesting
     public EditText getEtSearchBar() {
         return etSearchBar;
     }
 
     @VisibleForTesting
-    void mockCoordinates(Pair<Double, Double> coordinates) {
-        presenter.updateCoordinates(coordinates);
+    public ImageButton getIbSearchButton() {
+        return ibSearchButton;
     }
 
     @VisibleForTesting
