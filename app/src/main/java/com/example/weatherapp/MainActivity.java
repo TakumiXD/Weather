@@ -35,20 +35,22 @@ public class MainActivity extends AppCompatActivity {
     private boolean ENABLE_GPS;
 
     private MainActivityPresenter presenter;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
 
-    AppBarLayout appBarLayout;
-    EditText etSearchBar;
-    ImageButton ibSearchButton;
-    public TextView tvCityName;
-    public TextView tvTemperatureNum;
-    public TextView tvWeather;
-    public TextView tvMaxTempNum;
-    public TextView tvMinTempNum;
-    public TextView tvHumidityNum;
-    public TextView tvWindSpeedNum;
-    public ImageView ivWeatherImg;
-    public RecyclerView rvForecastDataList;
-    public ForecastListAdapter forecastListAdapter;
+    public AppBarLayout appBarLayout;
+    public EditText etSearchBar;
+    public ImageButton ibSearchButton;
+    private TextView tvCityName;
+    private TextView tvTemperatureNum;
+    private TextView tvWeather;
+    private TextView tvMaxTempNum;
+    private TextView tvMinTempNum;
+    private TextView tvHumidityNum;
+    private TextView tvWindSpeedNum;
+    private ImageView ivWeatherImg;
+    private RecyclerView rvForecastDataList;
+    private ForecastListAdapter forecastListAdapter;
 
     public static final String ENABLE_GPS_INTENT = "ENABLE_GPS";
     private static final int LOCATION_REFRESH_TIME = 600000;
@@ -56,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String FAHRENHEIT_SYMBOL = "\u00B0";
     private static final String PERCENT_SYMBOL = "%";
     private static final String MPH_SYMBOL = "mph";
-    private LocationManager locationManager;
-    private LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         rvForecastDataList.setAdapter(forecastListAdapter);
 
         appBarLayout.setOutlineProvider(null);
-        disableAppBarLayout();
 
         // Set up MVP
         MainActivityModel model = new ViewModelProvider(this).get(MainActivityModel.class);
@@ -95,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         ibSearchButton.setOnClickListener(presenter::onSearchButtonClicked);
 
         if (ENABLE_GPS) {
+            disableAppBarLayout();
             LocationPermissionChecker locationPermissionChecker = new LocationPermissionChecker(this);
             locationPermissionChecker.ensurePermissions();
             // infinite loop until location permissions are granted by user
@@ -154,7 +154,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void disableGPS() {
-        locationManager.removeUpdates(locationListener);
+        if (ENABLE_GPS) {
+            locationManager.removeUpdates(locationListener);
+        }
         //locationManager = null;
     }
 
@@ -169,6 +171,46 @@ public class MainActivity extends AppCompatActivity {
     @VisibleForTesting
     void mockCoordinates(Pair<Double, Double> coordinates) {
         presenter.updateCoordinates(coordinates);
+    }
+
+    @VisibleForTesting
+    public MainActivityPresenter getPresenter() {
+        return presenter;
+    }
+
+    @VisibleForTesting
+    public TextView getTvCityName() {
+        return tvCityName;
+    }
+
+    @VisibleForTesting
+    public TextView getTvTemperatureNum() {
+        return tvTemperatureNum;
+    }
+
+    @VisibleForTesting
+    public TextView getTvWeather() {
+        return tvWeather;
+    }
+
+    @VisibleForTesting
+    public TextView getTvMaxTempNum() {
+        return tvMaxTempNum;
+    }
+
+    @VisibleForTesting
+    public TextView getTvMinTempNum() {
+        return tvMinTempNum;
+    }
+
+    @VisibleForTesting
+    public TextView getTvHumidityNum() {
+        return tvHumidityNum;
+    }
+
+    @VisibleForTesting
+    public TextView getTvWindSpeedNum() {
+        return tvWindSpeedNum;
     }
 
     @VisibleForTesting
