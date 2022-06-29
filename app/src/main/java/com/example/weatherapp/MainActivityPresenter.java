@@ -118,6 +118,7 @@ public class MainActivityPresenter {
             }
             @Override
             public void onError() {
+                activity.displayErrorMessage();
                 Log.d("WeatherApp", "WeatherDataService.getCurrentData failed");
             }
         });

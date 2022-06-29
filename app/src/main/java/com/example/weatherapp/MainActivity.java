@@ -27,6 +27,7 @@ import com.example.weatherapp.weatherdata.CurrentWeatherData;
 import com.example.weatherapp.weatherdata.ForecastWeatherData;
 import com.google.android.material.appbar.AppBarLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String FAHRENHEIT_SYMBOL = "\u00B0";
     private static final String PERCENT_SYMBOL = "%";
     private static final String MPH_SYMBOL = "mph";
+    private static final String INVALID_CITY = "Invalid City";
+    private static final String EMPTY_STRING = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +136,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void setForecastWeatherDataDisplay(List<ForecastWeatherData> forecastWeatherDataList) {
         forecastListAdapter.setForecastWeatherDataList(forecastWeatherDataList);
+    }
+
+    public void displayErrorMessage() {
+        tvCityName.setText(INVALID_CITY);
+        tvTemperatureNum.setText(EMPTY_STRING);
+        tvWeather.setText(EMPTY_STRING);
+        tvMaxTempNum.setText(EMPTY_STRING);
+        tvMinTempNum.setText(EMPTY_STRING);
+        tvHumidityNum.setText(EMPTY_STRING);
+        tvWindSpeedNum.setText(EMPTY_STRING);
+        ivWeatherImg.setImageResource(R.drawable.example_weather_img);
+        forecastListAdapter.setForecastWeatherDataList(new ArrayList<>());
     }
 
     @SuppressLint("MissingPermission")
