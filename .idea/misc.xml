@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/tsugi/AndroidStudioProjects/WeatherApp/app/src/main/res/drawable/gradient_background.xml" value="0.332" />
+        <entry key="..\:/Users/tsugi/AndroidStudioProjects/WeatherApp/app/src/main/res/drawable/gradient_background1.xml" value="0.332" />
         <entry key="..\:/Users/tsugi/AndroidStudioProjects/WeatherApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.332" />
         <entry key="..\:/Users/tsugi/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/tsugi/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/forecast_data_item.xml" value="0.25" />

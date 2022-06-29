@@ -21,6 +21,7 @@ import com.example.weatherapp.helper.ImgLoader;
 import com.example.weatherapp.location.LocationPermissionChecker;
 import com.example.weatherapp.weatherdata.CurrentWeatherData;
 import com.example.weatherapp.weatherdata.ForecastWeatherData;
+import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.List;
 
@@ -45,14 +46,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String ENABLE_GPS_INTENT = "ENABLE_GPS";
     private static final int LOCATION_REFRESH_TIME = 600000;
     private static final int LOCATION_REFRESH_DISTANCE = 0;
-    private static final String FAHRENHEIT_SYMBOL = "\u2109";
+    private static final String FAHRENHEIT_SYMBOL = "\u00B0";
     private static final String PERCENT_SYMBOL = "%";
     private static final String MPH_SYMBOL = "mph";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Weather");
 
         // Check intent extra to determine whether or not to enable GPS. Default value is true.
         ENABLE_GPS = getIntent().getBooleanExtra(ENABLE_GPS_INTENT, true);
@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
         forecastListAdapter = new ForecastListAdapter(ENABLE_GPS);
         rvForecastDataList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvForecastDataList.setAdapter(forecastListAdapter);
+
+        AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
+        appBarLayout.setOutlineProvider(null);
 
         // Set up MVP
         MainActivityModel model = new ViewModelProvider(this).get(MainActivityModel.class);

@@ -21,6 +21,7 @@ import java.util.List;
 public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapter.ViewHolder> {
 
     private List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
+    private static final String FAHRENHEIT_SYMBOL = "\u00B0";
     private final boolean ENABLE_GPS;
 
     public ForecastListAdapter(boolean ENABLE_GPS) {
@@ -42,7 +43,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ForecastWeatherData forecastWeatherData = forecastWeatherDataList.get(holder.getAdapterPosition());
         holder.tvDateAndTime.setText(forecastWeatherData.getDateAndTime());
-        holder.tvTemperature.setText(""+forecastWeatherData.getTemperature() + "\u2109");
+        holder.tvTemperature.setText(""+forecastWeatherData.getTemperature() + FAHRENHEIT_SYMBOL);
         holder.tvWeather.setText(forecastWeatherData.getWeather());
         if (ENABLE_GPS) {
             ImgLoader.loadImg(forecastWeatherData, holder.ivWeatherImg);

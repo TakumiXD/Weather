@@ -7,6 +7,54 @@
     android:background="@drawable/gradient_background"
     tools:context=".MainActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            <EditText
+                android:id="@+id/search_bar"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Search by city name"
+                android:background="@null"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/search_img"/>
+
+            <ImageView
+                android:id="@+id/search_img"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:padding="10dp"
+                app:layout_constraintStart_toEndOf="@id/search_bar"
+                app:layout_constraintEnd_toStartOf="@id/options"
+                app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
+
+            <ImageView
+                android:id="@+id/options"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:layout_constraintStart_toEndOf="@id/search_img"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <TextView
         android:id="@+id/city_name"
         android:layout_width="match_parent"
@@ -15,7 +63,7 @@
         android:textSize="30sp"
         android:gravity="center"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout"/>
 
     <TextView
         android:id="@+id/temperature_num"
@@ -148,7 +196,7 @@
         android:layout_height="wrap_content"
         android:text="@string/mock_location_btn"
         android:textSize="8sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="60dp"
         android:layout_marginStart="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -156,16 +204,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/forecast_data_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="220dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
         android:foregroundGravity="center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wind_speed_caption" />
+        app:layout_constraintTop_toBottomOf="@id/wind_speed_caption"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
