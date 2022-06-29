@@ -36,10 +36,10 @@ public class MainActivityTest {
                     ("RandomCity", 100, "Weather", 105, 95, 10, 20, "01d");
             activity.setCurrentWeatherDataDisplay(randomCurrentWeatherData);
             assertEquals(activity.tvCityName.getText(), "RandomCity");
-            assertEquals(activity.tvTemperatureNum.getText(), "100.0\u2109");
+            assertEquals(activity.tvTemperatureNum.getText(), "100.0\u00B0");
             assertEquals(activity.tvWeather.getText(), "Weather");
-            assertEquals(activity.tvMaxTempNum.getText(), "105.0\u2109");
-            assertEquals(activity.tvMinTempNum.getText(), "95.0\u2109");
+            assertEquals(activity.tvMaxTempNum.getText(), "105.0\u00B0");
+            assertEquals(activity.tvMinTempNum.getText(), "95.0\u00B0");
             assertEquals(activity.tvHumidityNum.getText(), "10.0%");
             assertEquals(activity.tvWindSpeedNum.getText(), "20.0mph");
         });
