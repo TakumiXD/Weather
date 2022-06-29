@@ -27,8 +27,8 @@ public class searchBehaviorTest {
             activity.etSearchBar.requestFocus();
             activity.etSearchBar.setText("London");
             activity.etSearchBar.clearFocus();
-            activity.ibSearchButton.performClick();
             assertEquals("London", activity.getEtSearchBar().getText().toString());
+            activity.ibSearchButton.performClick();
             assertEquals("London", activity.getPresenter().getCurrentSearchedCityName());
         });
     }
