@@ -67,9 +67,9 @@ public class MainActivityPresenter {
 
     public void onSearchButtonClicked(View view) {
         String searchBarText = activity.getEtSearchBar().getText().toString();
-        Log.d("WeatherApp", "Search Button  with: " + searchBarText);
         activity.disableGPS();
         updateSearchedWeatherData(searchBarText);
+        Log.d("WeatherApp", "Search Button  with: " + searchBarText);
     }
 
     public void updateUserLocationWeatherData() {
@@ -87,7 +87,7 @@ public class MainActivityPresenter {
                 Log.d("WeatherApp", "WeatherDataService.getCurrentData failed");
             }
         });
-        weatherDataService.getForecastByLocation(model.getCoordinates().getValue(), new VolleyResponseListener() {
+        weatherDataService.getForecastDataByLocation(model.getCoordinates().getValue(), new VolleyResponseListener() {
             @Override
             public void onResponse(CurrentWeatherData currentWeatherData,
                                    List<ForecastWeatherData> forecastWeatherDataList) {
@@ -116,7 +116,7 @@ public class MainActivityPresenter {
                 Log.d("WeatherApp", "WeatherDataService.getCurrentData failed");
             }
         });
-        weatherDataService.getForecastByCityName(cityName, new VolleyResponseListener() {
+        weatherDataService.getForecastDataByCityName(cityName, new VolleyResponseListener() {
             @Override
             public void onResponse(CurrentWeatherData currentWeatherData, List<ForecastWeatherData> forecastWeatherDataList) {
                 Log.d("WeatherApp", "WeatherDataService.getForecast success");
