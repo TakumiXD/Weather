@@ -82,7 +82,35 @@ public class MainActivityPresenter {
         PopupMenu popup = new PopupMenu(activity, view);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.options_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener( menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.see_favorites:
+                    onSeeFavoritesMenuItemClicked();
+                    return true;
+                case R.id.add_to_favorites:
+                    onAddToFavoritesMenuItemClicked();
+                    return true;
+                case R.id.weather_of_my_location:
+                    onWeatherOfMyLocationMenuItemClicked();
+                    return true;
+                default:
+                    return false;
+            }
+        });
         popup.show();
+    }
+
+    private void onSeeFavoritesMenuItemClicked() {
+        Log.d("WeatherApp", "menu item clicked: See Favorites");
+    }
+
+    private void onAddToFavoritesMenuItemClicked() {
+        Log.d("WeatherApp", "menu item clicked: Add to Favorites");
+    }
+
+    private void onWeatherOfMyLocationMenuItemClicked() {
+        Log.d("WeatherApp", "menu item clicked: Weather of my Location");
+        activity.enableGPS();
     }
 
     public void updateUserLocationWeatherData() {

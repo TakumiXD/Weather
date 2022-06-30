@@ -14,6 +14,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -174,11 +175,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void disableGPS() {
         if (ENABLE_GPS) {
+            Log.d("WeatherApp", "GPS disabled");
             locationManager.removeUpdates(locationListener);
         }
     }
 
     public void enableGPS() {
+        Log.d("WeatherApp", "GPS enabled");
         setupLocationListener();
     }
 
@@ -240,18 +243,5 @@ public class MainActivity extends AppCompatActivity {
     @VisibleForTesting
     ForecastListAdapter getForecastListAdapter() {
         return forecastListAdapter;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.weather_of_my_location:
-                enableGPS();
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
