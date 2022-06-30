@@ -14,7 +14,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -95,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.mock_location_btn).setOnClickListener(presenter::onMockButtonClicked);
         ibSearchButton.setOnClickListener(presenter::onSearchButtonClicked);
+        findViewById(R.id.options_button).setOnClickListener(presenter::onOptionsMenuClicked);
 
         if (ENABLE_GPS) {
             disableAppBarLayout();
@@ -170,11 +175,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void disableGPS() {
         if (ENABLE_GPS) {
+            Log.d("WeatherApp", "GPS disabled");
             locationManager.removeUpdates(locationListener);
         }
     }
 
     public void enableGPS() {
+        Log.d("WeatherApp", "GPS enabled");
         setupLocationListener();
     }
 
@@ -237,5 +244,4 @@ public class MainActivity extends AppCompatActivity {
     ForecastListAdapter getForecastListAdapter() {
         return forecastListAdapter;
     }
-
 }

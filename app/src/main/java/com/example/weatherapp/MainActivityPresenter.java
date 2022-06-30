@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.util.Log;
 import android.util.Pair;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 
 import androidx.annotation.VisibleForTesting;
 
@@ -76,7 +78,42 @@ public class MainActivityPresenter {
         Log.d("WeatherApp", "Search Button  with: " + searchBarText);
     }
 
-    public void updateUserLocationWeatherData() {
+    public void onOptionsMenuClicked(View view) {
+        PopupMenu popup = new PopupMenu(activity, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.options_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener( menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.see_favorites:
+                    onSeeFavoritesMenuItemClicked();
+                    return true;
+                case R.id.add_to_favorites:
+                    onAddToFavoritesMenuItemClicked();
+                    return true;
+                case R.id.weather_of_my_location:
+                    onWeatherOfMyLocationMenuItemClicked();
+                    return true;
+                default:
+                    return false;
+            }
+        });
+        popup.show();
+    }
+
+    private void onSeeFavoritesMenuItemClicked() {
+        Log.d("WeatherApp", "menu item clicked: See Favorites");
+    }
+
+    private void onAddToFavoritesMenuItemClicked() {
+        Log.d("WeatherApp", "menu item clicked: Add to Favorites");
+    }
+
+    private void onWeatherOfMyLocationMenuItemClicked() {
+        Log.d("WeatherApp", "menu item clicked: Weather of my Location");
+        activity.enableGPS();
+    }
+
+    private void updateUserLocationWeatherData() {
         WeatherDataService weatherDataService = new WeatherDataService(activity);
         weatherDataService.getCurrentDataByLocation(model.getCoordinates().getValue(), new VolleyResponseListener() {
             @Override
@@ -107,7 +144,7 @@ public class MainActivityPresenter {
         activity.enableAppBarLayout();
     }
 
-    public void updateSearchedWeatherData(String cityName) {
+    private void updateSearchedWeatherData(String cityName) {
         currentSearchedCityName = cityName;
         WeatherDataService weatherDataService = new WeatherDataService(activity);
         weatherDataService.getCurrentDataByCityName(cityName, new VolleyResponseListener() {
