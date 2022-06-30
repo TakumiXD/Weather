@@ -113,7 +113,7 @@ public class MainActivityPresenter {
         activity.enableGPS();
     }
 
-    public void updateUserLocationWeatherData() {
+    private void updateUserLocationWeatherData() {
         WeatherDataService weatherDataService = new WeatherDataService(activity);
         weatherDataService.getCurrentDataByLocation(model.getCoordinates().getValue(), new VolleyResponseListener() {
             @Override
@@ -144,7 +144,7 @@ public class MainActivityPresenter {
         activity.enableAppBarLayout();
     }
 
-    public void updateSearchedWeatherData(String cityName) {
+    private void updateSearchedWeatherData(String cityName) {
         currentSearchedCityName = cityName;
         WeatherDataService weatherDataService = new WeatherDataService(activity);
         weatherDataService.getCurrentDataByCityName(cityName, new VolleyResponseListener() {
