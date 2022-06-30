@@ -39,17 +39,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0"
                 android:padding="10dp"
+                android:background="@android:color/transparent"
                 app:layout_constraintStart_toEndOf="@id/search_bar"
-                app:layout_constraintEnd_toStartOf="@id/options"
+                app:layout_constraintEnd_toStartOf="@id/options_button"
                 app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
             <ImageView
-                android:id="@+id/options"
+                android:id="@+id/options_button"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:padding="10dp"
                 app:layout_constraintStart_toEndOf="@id/search_button"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_baseline_more_vert_24" />
 
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>

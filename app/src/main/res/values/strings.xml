@@ -13,4 +13,7 @@
     <string name="wind_speed_num"></string>
     <string name="mock_location_btn">Mock Coordinates</string>
     <string name="date_and_time">Loading...</string>
+    <string name="see_favorites">See Favorites</string>
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="weather_of_my_location">Weather of my Location</string>
 </resources>

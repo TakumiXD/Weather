@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.util.Log;
 import android.util.Pair;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 
 import androidx.annotation.VisibleForTesting;
 
@@ -74,6 +76,13 @@ public class MainActivityPresenter {
         activity.disableGPS();
         updateSearchedWeatherData(searchBarText);
         Log.d("WeatherApp", "Search Button  with: " + searchBarText);
+    }
+
+    public void onOptionsMenuClicked(View view) {
+        PopupMenu popup = new PopupMenu(activity, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.options_menu, popup.getMenu());
+        popup.show();
     }
 
     public void updateUserLocationWeatherData() {

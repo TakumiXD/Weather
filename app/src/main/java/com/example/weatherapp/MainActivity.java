@@ -15,6 +15,9 @@ import android.location.LocationManager;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.mock_location_btn).setOnClickListener(presenter::onMockButtonClicked);
         ibSearchButton.setOnClickListener(presenter::onSearchButtonClicked);
+        findViewById(R.id.options_button).setOnClickListener(presenter::onOptionsMenuClicked);
 
         if (ENABLE_GPS) {
             disableAppBarLayout();
@@ -238,4 +242,16 @@ public class MainActivity extends AppCompatActivity {
         return forecastListAdapter;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.weather_of_my_location:
+                enableGPS();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
