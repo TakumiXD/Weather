@@ -1,4 +1,4 @@
-package com.example.weatherapp;
+package com.example.weatherapp.database;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -12,7 +12,7 @@ public interface FavoriteCityDao {
     long insert(FavoriteCity favoriteCity);
 
     @Query("SELECT * FROM `favorite_cities` WHERE `id`=:id")
-    FavoriteCity get (long id);
+    FavoriteCity get(long id);
 
     @Query("SELECT * FROM `favorite_cities`")
     List<FavoriteCity> getAll();

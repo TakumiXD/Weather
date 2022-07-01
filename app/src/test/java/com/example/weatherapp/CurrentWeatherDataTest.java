@@ -17,6 +17,22 @@ import com.example.weatherapp.weatherdata.CurrentWeatherData;
 
 @RunWith(AndroidJUnit4.class)
 public class CurrentWeatherDataTest {
+    private static final String CITY = "London";
+    private static final String WEATHER = "Clear";
+    private static final double TEMPERATURE = 100;
+    private static final String TEMPERATURE_STRING = "100.0";
+    private static final double MAX_TEMPERATURE = 105;
+    private static final String MAX_TEMPERATURE_STRING = "105.0";
+    private static final double MIN_TEMPERATURE = 95;
+    private static final String MIN_TEMPERATURE_STRING = "95.0";
+    private static final double HUMIDITY = 10;
+    private static final String HUMIDITY_STRING = "10.0";
+    private static final double WIND_SPEED = 20;
+    private static final String WIND_SPEED_STRING = "20.0";
+    private static final String WEATHER_ICON = "01d";
+    private static final String DEGREE_SYMBOL = "\u00B0";
+    private static final String PERCENT_SYMBOL = "%";
+    private static final String MPH_SYMBOL = "mph";
 
     @Test
     public void testSetCurrentWeatherDataDisplay() {
@@ -28,15 +44,15 @@ public class CurrentWeatherDataTest {
 
         scenario.onActivity(activity -> {
             CurrentWeatherData mockCurrentWeatherData = new CurrentWeatherData
-                    ("RandomCity", 100, "Weather", 105, 95, 10, 20, "01d");
+                    (CITY, TEMPERATURE, WEATHER, MAX_TEMPERATURE, MIN_TEMPERATURE, HUMIDITY, WIND_SPEED, WEATHER_ICON);
             activity.setCurrentWeatherDataDisplay(mockCurrentWeatherData);
-            assertEquals(activity.getTvCityName().getText(), "RandomCity");
-            assertEquals(activity.getTvTemperatureNum().getText(), "100.0\u00B0");
-            assertEquals(activity.getTvWeather().getText(), "Weather");
-            assertEquals(activity.getTvMaxTempNum().getText(), "105.0\u00B0");
-            assertEquals(activity.getTvMinTempNum().getText(), "95.0\u00B0");
-            assertEquals(activity.getTvHumidityNum().getText(), "10.0%");
-            assertEquals(activity.getTvWindSpeedNum().getText(), "20.0mph");
+            assertEquals(CITY, activity.getTvCityName().getText());
+            assertEquals(TEMPERATURE_STRING + DEGREE_SYMBOL, activity.getTvTemperatureNum().getText());
+            assertEquals(WEATHER, activity.getTvWeather().getText());
+            assertEquals(MAX_TEMPERATURE_STRING + DEGREE_SYMBOL, activity.getTvMaxTempNum().getText());
+            assertEquals(MIN_TEMPERATURE_STRING + DEGREE_SYMBOL, activity.getTvMinTempNum().getText());
+            assertEquals(HUMIDITY_STRING + PERCENT_SYMBOL, activity.getTvHumidityNum().getText());
+            assertEquals(WIND_SPEED_STRING + MPH_SYMBOL, activity.getTvWindSpeedNum().getText());
         });
     }
 }

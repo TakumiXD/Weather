@@ -1,4 +1,4 @@
-package com.example.weatherapp;
+package com.example.weatherapp.database;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -13,7 +13,7 @@ public class FavoriteCity {
     @NonNull
     public String name;
 
-    FavoriteCity(@NonNull String name) {
+    public FavoriteCity(@NonNull String name) {
         this.name = name;
     }
 }
