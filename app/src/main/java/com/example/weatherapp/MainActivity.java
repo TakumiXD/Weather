@@ -139,12 +139,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (USE_DATABASE) {
             FavoriteCityDao favoriteCityDao = FavoriteCitiesDatabase.getSingleton(this).favoriteCityDao();
-            List<FavoriteCity> favoriteCities = favoriteCityDao.getAll();
-            ArrayList<String> favoriteCityNames = new ArrayList<>();
-            for (FavoriteCity favoriteCity : favoriteCities) {
-                favoriteCityNames.add(favoriteCity.name);
-            }
-            presenter.updateFavoriteCityNames(favoriteCityNames);
+            List<String> favoriteCityNames = favoriteCityDao.getAllNames();
+            ArrayList<String> favoriteCityNamesAL = new ArrayList<>();
+            favoriteCityNamesAL.addAll(favoriteCityNames);
+            presenter.updateFavoriteCityNames(favoriteCityNamesAL);
         }
     }
 

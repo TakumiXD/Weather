@@ -1,6 +1,7 @@
 package com.example.weatherapp.database;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -10,6 +11,7 @@ public class FavoriteCity {
     @PrimaryKey(autoGenerate = true)
     public long id = 0;
 
+    @ColumnInfo(name = "name")
     @NonNull
     public String name;
 

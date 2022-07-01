@@ -39,7 +39,7 @@ public class DatabaseTest {
     public void testInsertAndGet() {
         FavoriteCity insertedFavoriteCity = new FavoriteCity("London");
         long id = favoriteCityDao.insert(insertedFavoriteCity);
-        FavoriteCity favoriteCity = favoriteCityDao.get(id);
+        FavoriteCity favoriteCity = favoriteCityDao.getByID(id);
         assertEquals(id, favoriteCity.id);
         assertEquals("London", favoriteCity.name);
     }
@@ -54,14 +54,27 @@ public class DatabaseTest {
     }
 
     @Test
-    public void testGetAll() {
+    public void testGetAllNames() {
         FavoriteCity favoriteCity1 = new FavoriteCity("San Diego");
         long id1 = favoriteCityDao.insert(favoriteCity1);
         FavoriteCity favoriteCity2 = new FavoriteCity("La Jolla");
         long id2 = favoriteCityDao.insert(favoriteCity2);
-        assertEquals(2, favoriteCityDao.getAll().size());
-        assertEquals("San Diego", favoriteCityDao.getAll().get(0).name);
-        assertEquals("La Jolla", favoriteCityDao.getAll().get(1).name);
+        assertEquals(2, favoriteCityDao.getAllNames().size());
+        assertEquals("San Diego", favoriteCityDao.getAllNames().get(0));
+        assertEquals("La Jolla", favoriteCityDao.getAllNames().get(1));
+    }
+
+    @Test
+    public void testDuplicateInsert() {
+        FavoriteCity favoriteCity1 = new FavoriteCity("San Diego");
+        long id1 = favoriteCityDao.insert(favoriteCity1);
+        for (int i = 0; i < 2; ++i) {
+            if (favoriteCityDao.getByName("San Diego") == null) {
+                FavoriteCity favoriteCity2 = new FavoriteCity("San Diego");
+                long id2 = favoriteCityDao.insert(favoriteCity2);
+            }
+        }
+        assertEquals(1, favoriteCityDao.getAllNames().size());
     }
 
     @Test
@@ -69,7 +82,7 @@ public class DatabaseTest {
         FavoriteCity favoriteCity = new FavoriteCity("London");
         long id = favoriteCityDao.insert(favoriteCity);
         favoriteCityDao.delete("London");
-        assertNull(favoriteCityDao.get(id));
+        assertNull(favoriteCityDao.getByID(id));
     }
 
 }
