@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Boolean value that determines whether or not to enable GPS. Used for testing.
     private boolean ENABLE_GPS;
+    private boolean USE_DATABASE;
 
     private MainActivityPresenter presenter;
     private LocationManager locationManager;
@@ -60,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView rvForecastDataList;
     private ForecastListAdapter forecastListAdapter;
 
-    public static final String ENABLE_GPS_INTENT = "ENABLE_GPS";
+    public static final String INTENT_ENABLE_GPS = "ENABLE_GPS";
+    public static final String INTENT_USE_DATABASE = "USE_DATABASE";
     private static final int LOCATION_REFRESH_TIME = 600000;
     private static final int LOCATION_REFRESH_DISTANCE = 0;
     private static final String DEGREE_SYMBOL = "\u00B0";
@@ -72,14 +74,29 @@ public class MainActivity extends AppCompatActivity {
     private static final String INTENT_RESULT = "result";
     private static final String LOG_MAIN_TAG = "WeatherApp";
 
-    ActivityResultLauncher<Intent> startForResult;
+    private final ActivityResultLauncher<Intent> startForResult =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Log.d(LOG_MAIN_TAG, "RESULT_OK");
+                        String resultString = result.getData().getStringExtra(INTENT_RESULT);
+                        presenter.updateSearchedWeatherData(resultString);
+                    }
+                    else if (result.getResultCode() == RESULT_CANCELED){
+                        Log.d(LOG_MAIN_TAG, "RESULT_CANCELED");
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Check intent extra to determine whether or not to enable GPS. Default value is true.
-        ENABLE_GPS = getIntent().getBooleanExtra(ENABLE_GPS_INTENT, true);
+        ENABLE_GPS = getIntent().getBooleanExtra(INTENT_ENABLE_GPS, true);
+        USE_DATABASE = getIntent().getBooleanExtra(INTENT_USE_DATABASE, true);
 
         setContentView(R.layout.activity_main);
         appBarLayout = findViewById(R.id.app_bar_layout);
@@ -120,29 +137,15 @@ public class MainActivity extends AppCompatActivity {
             setupLocationListener();
         }
 
-        FavoriteCityDao favoriteCityDao = FavoriteCitiesDatabase.getSingleton(this).favoriteCityDao();
-        List<FavoriteCity> favoriteCities = favoriteCityDao.getAll();
-        ArrayList<String> favoriteCityNames = new ArrayList<>();
-        for (FavoriteCity favoriteCity : favoriteCities) {
-            favoriteCityNames.add(favoriteCity.name);
-        }
-        presenter.updateFavoriteCityNames(favoriteCityNames);
-
-        startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == RESULT_OK) {
-                    Log.d(LOG_MAIN_TAG, "RESULT_OK");
-                    String resultString = result.getData().getStringExtra(INTENT_RESULT);
-                    presenter.updateSearchedWeatherData(resultString);
-                }
-                else if (result.getResultCode() == RESULT_CANCELED){
-                    Log.d(LOG_MAIN_TAG, "RESULT_CANCELED");
-                    displayErrorMessage();
-                }
+        if (USE_DATABASE) {
+            FavoriteCityDao favoriteCityDao = FavoriteCitiesDatabase.getSingleton(this).favoriteCityDao();
+            List<FavoriteCity> favoriteCities = favoriteCityDao.getAll();
+            ArrayList<String> favoriteCityNames = new ArrayList<>();
+            for (FavoriteCity favoriteCity : favoriteCities) {
+                favoriteCityNames.add(favoriteCity.name);
             }
-        });
+            presenter.updateFavoriteCityNames(favoriteCityNames);
+        }
     }
 
     public void openFavoritesList(ArrayList<String> favoriteCityNames) {
