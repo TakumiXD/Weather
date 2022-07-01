@@ -29,9 +29,12 @@ public class MainActivityPresenter {
 
     public String currentSearchedCityName = "";
 
-    public MainActivityPresenter(MainActivity activity, MainActivityModel model) {
+    public MainActivityPresenter(MainActivity activity, MainActivityModel model, boolean useDatabase) {
         this.activity = activity;
         this.model = model;
+        if (useDatabase) {
+            model.makeDatabase();
+        }
     }
 
     public void updateCoordinates(Pair<Double, Double> coordinates) {
@@ -41,6 +44,10 @@ public class MainActivityPresenter {
 
     public void updateFavoriteCityNames(ArrayList<String> favoriteCityNames) {
         model.setFavoriteCityNames(favoriteCityNames);
+    }
+
+    public void updateFavoriteCityNames(String favoriteCityName) {
+        model.addFavoriteCity(favoriteCityName);
     }
 
     @SuppressLint("SetTextI18n")
@@ -112,6 +119,7 @@ public class MainActivityPresenter {
     }
 
     private void onAddToFavoritesMenuItemClicked() {
+        model.addFavoriteCity(activity.getTvCityName().getText().toString());
         Log.d("WeatherApp", "menu item clicked: Add to Favorites");
     }
 

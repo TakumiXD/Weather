@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.weatherapp.database.FavoriteCitiesDatabase;
-import com.example.weatherapp.database.FavoriteCity;
 import com.example.weatherapp.database.FavoriteCityDao;
 import com.example.weatherapp.helper.ImgLoader;
 import com.example.weatherapp.location.LocationPermissionChecker;
@@ -40,7 +39,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     // Boolean value that determines whether or not to enable GPS. Used for testing.
-    private boolean ENABLE_GPS;
+    private boolean USE_GPS;
     private boolean USE_DATABASE;
 
     private MainActivityPresenter presenter;
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Check intent extra to determine whether or not to enable GPS. Default value is true.
-        ENABLE_GPS = getIntent().getBooleanExtra(INTENT_ENABLE_GPS, true);
+        USE_GPS = getIntent().getBooleanExtra(INTENT_ENABLE_GPS, true);
         USE_DATABASE = getIntent().getBooleanExtra(INTENT_USE_DATABASE, true);
 
         setContentView(R.layout.activity_main);
@@ -112,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         ivWeatherImg = findViewById(R.id.weather_img);
 
         rvForecastDataList = findViewById(R.id.forecast_data_list);
-        forecastListAdapter = new ForecastListAdapter(ENABLE_GPS);
+        forecastListAdapter = new ForecastListAdapter(USE_GPS);
         rvForecastDataList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvForecastDataList.setAdapter(forecastListAdapter);
 
@@ -120,13 +119,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up MVP
         MainActivityModel model = new ViewModelProvider(this).get(MainActivityModel.class);
-        presenter = new MainActivityPresenter(this, model);
+        presenter = new MainActivityPresenter(this, model, USE_DATABASE);
 
         findViewById(R.id.mock_location_btn).setOnClickListener(presenter::onMockButtonClicked);
         ibSearchButton.setOnClickListener(presenter::onSearchButtonClicked);
         findViewById(R.id.options_button).setOnClickListener(presenter::onOptionsMenuClicked);
 
-        if (ENABLE_GPS) {
+        if (USE_GPS) {
             disableAppBarLayout();
             LocationPermissionChecker locationPermissionChecker = new LocationPermissionChecker(this);
             locationPermissionChecker.ensurePermissions();
@@ -135,16 +134,6 @@ public class MainActivity extends AppCompatActivity {
             }
             // when permissions are granted, set up location listener
             setupLocationListener();
-        }
-
-        if (USE_DATABASE) {
-            FavoriteCityDao favoriteCityDao = FavoriteCitiesDatabase.getSingleton(this).favoriteCityDao();
-            List<FavoriteCity> favoriteCities = favoriteCityDao.getAll();
-            ArrayList<String> favoriteCityNames = new ArrayList<>();
-            for (FavoriteCity favoriteCity : favoriteCities) {
-                favoriteCityNames.add(favoriteCity.name);
-            }
-            presenter.updateFavoriteCityNames(favoriteCityNames);
         }
     }
 
@@ -174,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         tvMinTempNum.setText(currentWeatherData.getMinTemperature() + DEGREE_SYMBOL);
         tvHumidityNum.setText(currentWeatherData.getHumidity() + PERCENT_SYMBOL);
         tvWindSpeedNum.setText(currentWeatherData.getWindSpeed() + MPH_SYMBOL);
-        if (ENABLE_GPS) {
+        if (USE_GPS) {
             // load weather image based on weather and time of day
             ImgLoader.loadImg(currentWeatherData, ivWeatherImg);
         }
@@ -215,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void disableGPS() {
-        if (ENABLE_GPS) {
+        if (USE_GPS) {
             Log.d(LOG_MAIN_TAG, "GPS disabled");
             locationManager.removeUpdates(locationListener);
         }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,16 +48,14 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
         return position;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvFavoriteCityName;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.tvFavoriteCityName = itemView.findViewById(R.id.favorite_city_name);
-        }
-
-        @Override
-        public void onClick(View view) {
-            favoritesActivity.onFavoriteItemClick(this.tvFavoriteCityName.getText().toString());
+            this.tvFavoriteCityName.setOnClickListener( view -> {
+                favoritesActivity.onFavoriteItemClick(this.tvFavoriteCityName.getText().toString());
+            });
         }
     }
 }
