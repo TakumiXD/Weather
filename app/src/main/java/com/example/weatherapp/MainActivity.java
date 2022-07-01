@@ -12,14 +12,9 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -60,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String ENABLE_GPS_INTENT = "ENABLE_GPS";
     private static final int LOCATION_REFRESH_TIME = 600000;
     private static final int LOCATION_REFRESH_DISTANCE = 0;
-    private static final String FAHRENHEIT_SYMBOL = "\u00B0";
+    private static final String DEGREE_SYMBOL = "\u00B0";
     private static final String PERCENT_SYMBOL = "%";
     private static final String MPH_SYMBOL = "mph";
     private static final String INVALID_CITY = "Invalid City";
@@ -127,10 +122,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void setCurrentWeatherDataDisplay(CurrentWeatherData currentWeatherData) {
         tvCityName.setText(currentWeatherData.getCityName());
-        tvTemperatureNum.setText(currentWeatherData.getTemperature() + FAHRENHEIT_SYMBOL);
+        tvTemperatureNum.setText(currentWeatherData.getTemperature() + DEGREE_SYMBOL);
         tvWeather.setText(currentWeatherData.getWeather());
-        tvMaxTempNum.setText(currentWeatherData.getMaxTemperature() + FAHRENHEIT_SYMBOL);
-        tvMinTempNum.setText(currentWeatherData.getMinTemperature() + FAHRENHEIT_SYMBOL);
+        tvMaxTempNum.setText(currentWeatherData.getMaxTemperature() + DEGREE_SYMBOL);
+        tvMinTempNum.setText(currentWeatherData.getMinTemperature() + DEGREE_SYMBOL);
         tvHumidityNum.setText(currentWeatherData.getHumidity() + PERCENT_SYMBOL);
         tvWindSpeedNum.setText(currentWeatherData.getWindSpeed() + MPH_SYMBOL);
         if (ENABLE_GPS) {
