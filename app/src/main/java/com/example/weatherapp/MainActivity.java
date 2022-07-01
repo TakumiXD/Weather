@@ -1,5 +1,9 @@
 package com.example.weatherapp;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,6 +25,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.weatherapp.database.FavoriteCitiesDatabase;
+import com.example.weatherapp.database.FavoriteCity;
+import com.example.weatherapp.database.FavoriteCityDao;
 import com.example.weatherapp.helper.ImgLoader;
 import com.example.weatherapp.location.LocationPermissionChecker;
 import com.example.weatherapp.weatherdata.CurrentWeatherData;
@@ -60,6 +68,26 @@ public class MainActivity extends AppCompatActivity {
     private static final String MPH_SYMBOL = "mph";
     private static final String INVALID_CITY = "Invalid City";
     private static final String EMPTY_STRING = "";
+    private static final String INTENT_CITY_NAMES = "city_names";
+    private static final String INTENT_RESULT = "result";
+    private static final String LOG_MAIN_TAG = "WeatherApp";
+
+    ActivityResultLauncher<Intent> startForResult =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if (result.getResultCode() == RESULT_OK) {
+                Log.d(LOG_MAIN_TAG, "RESULT_OK");
+                String resultString = result.getData().getStringExtra(INTENT_RESULT);
+                presenter.updateSearchedWeatherData(resultString);
+            }
+            else if (result.getResultCode() == RESULT_CANCELED){
+                Log.d(LOG_MAIN_TAG, "RESULT_CANCELED");
+                displayErrorMessage();
+            }
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +134,20 @@ public class MainActivity extends AppCompatActivity {
             // when permissions are granted, set up location listener
             setupLocationListener();
         }
+
+        FavoriteCityDao favoriteCityDao = FavoriteCitiesDatabase.getSingleton(this).favoriteCityDao();
+        List<FavoriteCity> favoriteCities = favoriteCityDao.getAll();
+        ArrayList<String> favoriteCityNames = new ArrayList<>();
+        for (FavoriteCity favoriteCity : favoriteCities) {
+            favoriteCityNames.add(favoriteCity.name);
+        }
+        presenter.updateFavoriteCityNames(favoriteCityNames);
+    }
+
+    public void openFavoritesList(ArrayList<String> favoriteCityNames) {
+        Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
+        intent.putStringArrayListExtra(INTENT_CITY_NAMES, favoriteCityNames);
+        startForResult.launch(intent);
     }
 
     private void disableAppBarLayout() {
@@ -170,13 +212,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void disableGPS() {
         if (ENABLE_GPS) {
-            Log.d("WeatherApp", "GPS disabled");
+            Log.d(LOG_MAIN_TAG, "GPS disabled");
             locationManager.removeUpdates(locationListener);
         }
     }
 
     public void enableGPS() {
-        Log.d("WeatherApp", "GPS enabled");
+        Log.d(LOG_MAIN_TAG, "GPS enabled");
         setupLocationListener();
     }
 

@@ -2,6 +2,7 @@ package com.example.weatherapp;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.util.Log;
 import android.util.Pair;
 import android.view.MenuInflater;
@@ -18,6 +19,7 @@ import com.example.weatherapp.weatherdata.ForecastWeatherData;
 import com.example.weatherapp.weatherdata.VolleyResponseListener;
 import com.example.weatherapp.weatherdata.WeatherDataService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivityPresenter {
@@ -35,6 +37,10 @@ public class MainActivityPresenter {
     public void updateCoordinates(Pair<Double, Double> coordinates) {
         model.setCoordinates(coordinates);
         updateUserLocationWeatherData();
+    }
+
+    public void updateFavoriteCityNames(ArrayList<String> favoriteCityNames) {
+        model.setFavoriteCityNames(favoriteCityNames);
     }
 
     @SuppressLint("SetTextI18n")
@@ -101,6 +107,7 @@ public class MainActivityPresenter {
     }
 
     private void onSeeFavoritesMenuItemClicked() {
+        activity.openFavoritesList(model.getFavoriteCityNames());
         Log.d("WeatherApp", "menu item clicked: See Favorites");
     }
 
@@ -144,7 +151,7 @@ public class MainActivityPresenter {
         activity.enableAppBarLayout();
     }
 
-    private void updateSearchedWeatherData(String cityName) {
+    public void updateSearchedWeatherData(String cityName) {
         currentSearchedCityName = cityName;
         WeatherDataService weatherDataService = new WeatherDataService(activity);
         weatherDataService.getCurrentDataByCityName(cityName, new VolleyResponseListener() {

@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 public class FavoritesActivity extends AppCompatActivity {
 
+    private static final String INTENT_CITY_NAMES = "city_names";
+    private static final String INTENT_RESULT = "result";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +21,7 @@ public class FavoritesActivity extends AppCompatActivity {
         findViewById(R.id.app_bar_layout).setOutlineProvider(null);
 
         Intent intent = getIntent();
-        ArrayList<String> cityNames = intent.getStringArrayListExtra("city_names");
+        ArrayList<String> cityNames = intent.getStringArrayListExtra(INTENT_CITY_NAMES);
 
         RecyclerView rvFavoritesList = findViewById(R.id.favorites_list);
         FavoritesListAdapter favoritesListAdapter = new FavoritesListAdapter(this, cityNames);
@@ -28,7 +31,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
     public void onFavoriteItemClick(String cityName) {
         Intent intent = new Intent();
-        intent.putExtra("result", cityName);
+        intent.putExtra(INTENT_RESULT, cityName);
         setResult(RESULT_OK, intent);
         finish();
     }
