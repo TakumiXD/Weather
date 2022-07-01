@@ -13,7 +13,7 @@ public class FavoriteCity {
     @NonNull
     public String name;
 
-    FavoriteCity(@NonNull String name) {
+    public FavoriteCity(@NonNull String name) {
         this.name = name;
     }
 }
