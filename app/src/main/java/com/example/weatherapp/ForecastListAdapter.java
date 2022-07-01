@@ -22,11 +22,11 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
 
     private List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
     private static final String FAHRENHEIT_SYMBOL = "\u00B0";
-    private final boolean ENABLE_GPS;
+    private final boolean USE_GPS;
 
-    public ForecastListAdapter(boolean ENABLE_GPS) {
+    public ForecastListAdapter(boolean USE_GPS) {
         this.setHasStableIds(true);
-        this.ENABLE_GPS = ENABLE_GPS;
+        this.USE_GPS = USE_GPS;
     }
 
     @NonNull
@@ -45,7 +45,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         holder.tvDateAndTime.setText(forecastWeatherData.getDateAndTime());
         holder.tvTemperature.setText(""+forecastWeatherData.getTemperature() + FAHRENHEIT_SYMBOL);
         holder.tvWeather.setText(forecastWeatherData.getWeather());
-        if (ENABLE_GPS) {
+        if (USE_GPS) {
             ImgLoader.loadImg(forecastWeatherData, holder.ivWeatherImg);
         }
         Log.d("notifyDataSetChanged", "onBindViewHolder called with position " + position);
