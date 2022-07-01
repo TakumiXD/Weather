@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey;
 public class FavoriteCity {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     public long id = 0;
 
     @ColumnInfo(name = "name")
