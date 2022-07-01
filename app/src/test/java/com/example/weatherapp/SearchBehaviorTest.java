@@ -27,7 +27,8 @@ public class SearchBehaviorTest {
     public void setUp() {
         Context context = ApplicationProvider.getApplicationContext();
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(MainActivity.ENABLE_GPS_INTENT, false);
+        intent.putExtra(MainActivity.INTENT_ENABLE_GPS, false);
+        intent.putExtra(MainActivity.INTENT_USE_DATABASE, false);
         scenario = ActivityScenario.<MainActivity>launch(intent);
         scenario.moveToState(Lifecycle.State.CREATED);
     }
