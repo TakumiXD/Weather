@@ -72,22 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String INTENT_RESULT = "result";
     private static final String LOG_MAIN_TAG = "WeatherApp";
 
-    ActivityResultLauncher<Intent> startForResult =
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                    new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-            if (result.getResultCode() == RESULT_OK) {
-                Log.d(LOG_MAIN_TAG, "RESULT_OK");
-                String resultString = result.getData().getStringExtra(INTENT_RESULT);
-                presenter.updateSearchedWeatherData(resultString);
-            }
-            else if (result.getResultCode() == RESULT_CANCELED){
-                Log.d(LOG_MAIN_TAG, "RESULT_CANCELED");
-                displayErrorMessage();
-            }
-        }
-    });
+    ActivityResultLauncher<Intent> startForResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +127,22 @@ public class MainActivity extends AppCompatActivity {
             favoriteCityNames.add(favoriteCity.name);
         }
         presenter.updateFavoriteCityNames(favoriteCityNames);
+
+        startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK) {
+                    Log.d(LOG_MAIN_TAG, "RESULT_OK");
+                    String resultString = result.getData().getStringExtra(INTENT_RESULT);
+                    presenter.updateSearchedWeatherData(resultString);
+                }
+                else if (result.getResultCode() == RESULT_CANCELED){
+                    Log.d(LOG_MAIN_TAG, "RESULT_CANCELED");
+                    displayErrorMessage();
+                }
+            }
+        });
     }
 
     public void openFavoritesList(ArrayList<String> favoriteCityNames) {
