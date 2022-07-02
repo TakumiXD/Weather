@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
     private ForecastListAdapter forecastListAdapter;
 
     private static final boolean DEFAULT_VALUE = true;
-    public static final String INTENT_ENABLE_GPS = "ENABLE_GPS";
-    public static final String INTENT_USE_DATABASE = "USE_DATABASE";
+    private static final String INTENT_ENABLE_GPS = "ENABLE_GPS";
+    private static final String INTENT_USE_DATABASE = "USE_DATABASE";
     private static final int LOCATION_REFRESH_TIME = 600000;
     private static final int LOCATION_REFRESH_DISTANCE = 0;
     private static final String DEGREE_SYMBOL = "\u00B0";
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String MPH_SYMBOL = "mph";
     private static final String INVALID_CITY = "Invalid City";
     private static final String EMPTY_STRING = "";
+    private static final String SPACE = " ";
     private static final String INTENT_CITY_NAMES = "city_names";
     private static final String INTENT_RESULT = "result";
     private static final String INTENT_REMOVED = "removed";
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Check intent extra to determine whether or not to use GPS and database.
         USE_GPS = getIntent().getBooleanExtra(INTENT_ENABLE_GPS, DEFAULT_VALUE);
-        USE_DATABASE = getIntent().getBooleanExtra(INTENT_USE_DATABASE, DEFAULT_VALUE);
+        boolean USE_DATABASE = getIntent().getBooleanExtra(INTENT_USE_DATABASE, DEFAULT_VALUE);
 
         setContentView(R.layout.activity_main);
         appBarLayout = findViewById(R.id.app_bar_layout);
@@ -172,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         tvMaxTempNum.setText(currentWeatherData.getMaxTemperature() + DEGREE_SYMBOL);
         tvMinTempNum.setText(currentWeatherData.getMinTemperature() + DEGREE_SYMBOL);
         tvHumidityNum.setText(currentWeatherData.getHumidity() + PERCENT_SYMBOL);
-        tvWindSpeedNum.setText(currentWeatherData.getWindSpeed() + MPH_SYMBOL);
+        tvWindSpeedNum.setText(currentWeatherData.getWindSpeed() + SPACE + MPH_SYMBOL);
         if (USE_GPS) {
             // load weather image based on weather and time of day
             ImgLoader.loadImg(currentWeatherData, ivWeatherImg);
@@ -230,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
         presenter.updateCoordinates(coordinates);
     }
 
-    @VisibleForTesting
     public EditText getEtSearchBar() {
         return etSearchBar;
     }
@@ -245,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
         return presenter;
     }
 
-    @VisibleForTesting
     public TextView getTvCityName() {
         return tvCityName;
     }

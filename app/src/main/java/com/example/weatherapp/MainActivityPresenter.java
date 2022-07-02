@@ -2,7 +2,6 @@ package com.example.weatherapp;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.util.Log;
 import android.util.Pair;
 import android.view.MenuInflater;

@@ -13,13 +13,14 @@ import java.util.ArrayList;
 
 public class FavoritesActivity extends AppCompatActivity {
 
-    private ArrayList<String> removedCities = new ArrayList<>();
+    private final ArrayList<String> removedCities = new ArrayList<>();
     private RecyclerView rvFavoritesList;
     private FavoritesListAdapter favoritesListAdapter;
 
     private static final String INTENT_CITY_NAMES = "city_names";
     private static final String INTENT_RESULT = "result";
     private static final String INTENT_REMOVED = "removed";
+    private static final String LOG_MAIN_TAG = "WeatherApp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class FavoritesActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent();
         for (String removedCity : removedCities) {
-            Log.d("WeatherApp", removedCity);
+            Log.d(LOG_MAIN_TAG, "Removed city: " + removedCity);
         }
         intent.putExtra(INTENT_REMOVED, removedCities);
         setResult(RESULT_OK, intent);

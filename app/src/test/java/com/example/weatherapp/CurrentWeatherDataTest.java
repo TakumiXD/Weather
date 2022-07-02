@@ -17,6 +17,8 @@ import com.example.weatherapp.weatherdata.CurrentWeatherData;
 
 @RunWith(AndroidJUnit4.class)
 public class CurrentWeatherDataTest {
+    private static final String INTENT_ENABLE_GPS = "ENABLE_GPS";
+    private static final String INTENT_USE_DATABASE = "USE_DATABASE";
     private static final String CITY = "London";
     private static final String WEATHER = "Clear";
     private static final double TEMPERATURE = 100;
@@ -31,6 +33,7 @@ public class CurrentWeatherDataTest {
     private static final String WIND_SPEED_STRING = "20.0";
     private static final String WEATHER_ICON = "01d";
     private static final String DEGREE_SYMBOL = "\u00B0";
+    private static final String SPACE = " ";
     private static final String PERCENT_SYMBOL = "%";
     private static final String MPH_SYMBOL = "mph";
 
@@ -38,8 +41,8 @@ public class CurrentWeatherDataTest {
     public void testSetCurrentWeatherDataDisplay() {
         Context context = ApplicationProvider.getApplicationContext();
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(MainActivity.INTENT_ENABLE_GPS, false);
-        intent.putExtra(MainActivity.INTENT_USE_DATABASE, false);
+        intent.putExtra(INTENT_ENABLE_GPS, false);
+        intent.putExtra(INTENT_USE_DATABASE, false);
         ActivityScenario<MainActivity> scenario = ActivityScenario.<MainActivity>launch(intent);
         scenario.moveToState(Lifecycle.State.CREATED);
 
@@ -53,7 +56,7 @@ public class CurrentWeatherDataTest {
             assertEquals(MAX_TEMPERATURE_STRING + DEGREE_SYMBOL, activity.getTvMaxTempNum().getText());
             assertEquals(MIN_TEMPERATURE_STRING + DEGREE_SYMBOL, activity.getTvMinTempNum().getText());
             assertEquals(HUMIDITY_STRING + PERCENT_SYMBOL, activity.getTvHumidityNum().getText());
-            assertEquals(WIND_SPEED_STRING + MPH_SYMBOL, activity.getTvWindSpeedNum().getText());
+            assertEquals(WIND_SPEED_STRING + SPACE + MPH_SYMBOL, activity.getTvWindSpeedNum().getText());
         });
     }
 }

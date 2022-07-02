@@ -7,14 +7,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdapter.ViewHolder> {
-    private FavoritesActivity favoritesActivity;
-    private List<String> cityNames;
+    private final FavoritesActivity favoritesActivity;
+    private final List<String> cityNames;
 
     public FavoritesListAdapter(FavoritesActivity favoritesActivity, List<String> cityNames) {
         this.favoritesActivity = favoritesActivity;
@@ -55,6 +54,7 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvFavoriteCityName;
         private final Button btnRemoveFavorite;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.tvFavoriteCityName = itemView.findViewById(R.id.favorite_city_name);
@@ -67,5 +67,6 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
                 favoritesActivity.onRemoveButtonClicked(this.tvFavoriteCityName.getText().toString());
             });
         }
+
     }
 }

@@ -20,6 +20,9 @@ import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class ForecastWeatherDataTest {
+    private static final String INTENT_ENABLE_GPS = "ENABLE_GPS";
+    private static final String INTENT_USE_DATABASE = "USE_DATABASE";
+
     /**
      * For some strange reason, notifyDataSetChanged in ForecastListAdapter does not call
      * onCreateViewHolder, onBindViewHolder(), and other functions during unit testing (but calls
@@ -33,8 +36,8 @@ public class ForecastWeatherDataTest {
     public void testSetForecastWeatherDataDisplay() {
         Context context = ApplicationProvider.getApplicationContext();
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(MainActivity.INTENT_ENABLE_GPS, false);
-        intent.putExtra(MainActivity.INTENT_USE_DATABASE, false);
+        intent.putExtra(INTENT_ENABLE_GPS, false);
+        intent.putExtra(INTENT_USE_DATABASE, false);
         ActivityScenario<MainActivity> scenario = ActivityScenario.<MainActivity>launch(intent);
         scenario.moveToState(Lifecycle.State.CREATED);
 
