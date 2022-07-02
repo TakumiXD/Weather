@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String EMPTY_STRING = "";
     private static final String INTENT_CITY_NAMES = "city_names";
     private static final String INTENT_RESULT = "result";
+    private static final String INTENT_REMOVED = "removed";
     private static final String LOG_MAIN_TAG = "WeatherApp";
 
     private final ActivityResultLauncher<Intent> startForResult =
@@ -81,7 +82,13 @@ public class MainActivity extends AppCompatActivity {
                     if (result.getResultCode() == RESULT_OK) {
                         Log.d(LOG_MAIN_TAG, "RESULT_OK");
                         String resultString = result.getData().getStringExtra(INTENT_RESULT);
-                        presenter.updateSearchedWeatherData(resultString);
+                        if (resultString != null) {
+                            presenter.updateSearchedWeatherData(resultString);
+                        }
+                        ArrayList removedCities = result.getData().getStringArrayListExtra(INTENT_REMOVED);
+                        if (!removedCities.isEmpty()) {
+                            presenter.updateFavoriteCityNames(removedCities);
+                        }
                     }
                     else if (result.getResultCode() == RESULT_CANCELED){
                         Log.d(LOG_MAIN_TAG, "RESULT_CANCELED");

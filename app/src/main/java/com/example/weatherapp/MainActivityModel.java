@@ -65,4 +65,11 @@ public class MainActivityModel extends AndroidViewModel {
         }
     }
 
+    public void removeFavoriteCities(ArrayList<String> cityNames) {
+        for (String cityName : cityNames) {
+            favoriteCityNames.remove(cityName);
+            favoriteCityDao.delete(cityName);
+        }
+    }
+
 }

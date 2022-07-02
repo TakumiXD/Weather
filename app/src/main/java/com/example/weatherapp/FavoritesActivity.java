@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,8 @@ public class FavoritesActivity extends AppCompatActivity {
 
     private static final String INTENT_CITY_NAMES = "city_names";
     private static final String INTENT_RESULT = "result";
+    private static final String INTENT_REMOVED = "removed";
+    private ArrayList<String> removedCities = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,21 @@ public class FavoritesActivity extends AppCompatActivity {
     public void onFavoriteItemClick(String cityName) {
         Intent intent = new Intent();
         intent.putExtra(INTENT_RESULT, cityName);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    public void onRemoveBtnClick(String cityName) {
+        removedCities.add(cityName);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        for (String removedCity : removedCities) {
+            Log.d("WeatherApp", removedCity);
+        }
+        intent.putExtra(INTENT_REMOVED, removedCities);
         setResult(RESULT_OK, intent);
         finish();
     }
