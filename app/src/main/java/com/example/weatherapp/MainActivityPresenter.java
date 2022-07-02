@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import com.example.weatherapp.weatherdata.CurrentWeatherData;
@@ -42,12 +43,8 @@ public class MainActivityPresenter {
         updateUserLocationWeatherData();
     }
 
-    public void updateFavoriteCityNames(ArrayList<String> favoriteCityNames) {
-        model.setFavoriteCityNames(favoriteCityNames);
-    }
-
-    public void updateFavoriteCityNames(String favoriteCityName) {
-        model.addFavoriteCity(favoriteCityName);
+    public void updateFavoriteCityNames(ArrayList<String> removedCityNames) {
+        model.removeFavoriteCities(removedCityNames);
     }
 
     @SuppressLint("SetTextI18n")
@@ -159,7 +156,7 @@ public class MainActivityPresenter {
         activity.enableAppBarLayout();
     }
 
-    public void updateSearchedWeatherData(String cityName) {
+    public void updateSearchedWeatherData(@NonNull String cityName) {
         currentSearchedCityName = cityName;
         WeatherDataService weatherDataService = new WeatherDataService(activity);
         weatherDataService.getCurrentDataByCityName(cityName, new VolleyResponseListener() {
