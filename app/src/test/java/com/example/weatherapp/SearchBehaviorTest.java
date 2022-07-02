@@ -19,6 +19,8 @@ import org.junit.runner.RunWith;
 public class SearchBehaviorTest {
     private ActivityScenario<MainActivity> scenario;
 
+    private static final String INTENT_ENABLE_GPS = "ENABLE_GPS";
+    private static final String INTENT_USE_DATABASE = "USE_DATABASE";
     private static final String BASIC_CITY = "London";
     private static final String LONG_CITY = "Bonadelle Ranchos-Madera Ranchos";
     private static final String NEW_LINE = "\n";
@@ -27,8 +29,8 @@ public class SearchBehaviorTest {
     public void setUp() {
         Context context = ApplicationProvider.getApplicationContext();
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(MainActivity.INTENT_ENABLE_GPS, false);
-        intent.putExtra(MainActivity.INTENT_USE_DATABASE, false);
+        intent.putExtra(INTENT_ENABLE_GPS, false);
+        intent.putExtra(INTENT_USE_DATABASE, false);
         scenario = ActivityScenario.<MainActivity>launch(intent);
         scenario.moveToState(Lifecycle.State.CREATED);
     }

@@ -20,9 +20,10 @@ import java.util.List;
 
 public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapter.ViewHolder> {
 
-    private List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
+    private final List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
     private static final String FAHRENHEIT_SYMBOL = "\u00B0";
     private final boolean USE_GPS;
+    private static final String LOG_NOTIFY_DATA_SET_CHANGED_TAG = "notifyDataSetChanged";
 
     public ForecastListAdapter(boolean USE_GPS) {
         this.setHasStableIds(true);
@@ -35,7 +36,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.forecast_data_item, parent, false);
-        Log.d("notifyDataSetChanged", "onCreateViewHolder called");
+        Log.d(LOG_NOTIFY_DATA_SET_CHANGED_TAG, "onCreateViewHolder called");
         return new ViewHolder(view);
     }
 
@@ -48,7 +49,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         if (USE_GPS) {
             ImgLoader.loadImg(forecastWeatherData, holder.ivWeatherImg);
         }
-        Log.d("notifyDataSetChanged", "onBindViewHolder called with position " + position);
+        Log.d(LOG_NOTIFY_DATA_SET_CHANGED_TAG, "onBindViewHolder called with position " + position);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
 
     @Override
     public int getItemViewType(int position) {
-        Log.d("notifyDataSetChanged", "getItemViewType called with position " + position);
+        Log.d(LOG_NOTIFY_DATA_SET_CHANGED_TAG, "getItemViewType called with position " + position);
         return position;
     }
 
@@ -77,7 +78,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         this.forecastWeatherDataList.clear();
         this.forecastWeatherDataList.addAll(forecastWeatherDataList);
         notifyDataSetChanged();
-        Log.d("notifyDataSetChanged", "notifyDataSetChanged called");
+        Log.d(LOG_NOTIFY_DATA_SET_CHANGED_TAG, "notifyDataSetChanged called");
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

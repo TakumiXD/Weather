@@ -19,9 +19,12 @@ import java.util.List;
 public class MainActivityModel extends AndroidViewModel {
 
     private final MutableLiveData<Pair<Double, Double>> coordinates;
-    private Application application;
+    private final Application application;
     private ArrayList<String> favoriteCityNames;
-    FavoriteCityDao favoriteCityDao;
+    private FavoriteCityDao favoriteCityDao;
+
+    private static final String LOG_SET_COORDINATES_TAG = "setCoordinates";
+    private static final String LOG_SET_FAVORITE_CITY_NAMES_TAG = "setFavoriteCityNames";
 
     public MainActivityModel(@NonNull Application application) {
         super(application);
@@ -43,8 +46,8 @@ public class MainActivityModel extends AndroidViewModel {
 
     public void setCoordinates(Pair<Double, Double> coordinates) {
         this.coordinates.setValue(coordinates);
-        Log.d("setCoordinates", "Latitude: " + coordinates.first);
-        Log.d("setCoordinates", "Longitude: " + coordinates.second);
+        Log.d(LOG_SET_COORDINATES_TAG, "Latitude: " + coordinates.first);
+        Log.d(LOG_SET_COORDINATES_TAG, "Longitude: " + coordinates.second);
     }
 
     public ArrayList<String> getFavoriteCityNames() {
@@ -53,7 +56,7 @@ public class MainActivityModel extends AndroidViewModel {
 
     public void setFavoriteCityNames(ArrayList<String> favoriteCityNames) {
         for (String favoriteCityName : favoriteCityNames) {
-            Log.d("setFavoriteCityNames", "Favorite City: " + favoriteCityName);
+            Log.d(LOG_SET_FAVORITE_CITY_NAMES_TAG, "Favorite City: " + favoriteCityName);
         }
         this.favoriteCityNames = favoriteCityNames;
     }

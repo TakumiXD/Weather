@@ -12,14 +12,17 @@ public abstract class FavoriteCitiesDatabase extends RoomDatabase {
 
     public abstract FavoriteCityDao favoriteCityDao();
 
+    private static final String FILE_NAME = "favorite_cities.db";
+
     public synchronized static FavoriteCitiesDatabase getSingleton(Context context){
         if(singleton == null){
             singleton = FavoriteCitiesDatabase.makeDatabase(context);
         }
         return singleton;
     }
+
     private static FavoriteCitiesDatabase makeDatabase(Context context){
-        return Room.databaseBuilder(context, FavoriteCitiesDatabase.class, "favorite_cities.db")
+        return Room.databaseBuilder(context, FavoriteCitiesDatabase.class, FILE_NAME)
                 .allowMainThreadQueries().build();
     }
 }
