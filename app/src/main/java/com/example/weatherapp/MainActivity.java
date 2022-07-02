@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String MPH_SYMBOL = "mph";
     private static final String INVALID_CITY = "Invalid City";
     private static final String EMPTY_STRING = "";
+    private static final String SPACE = " ";
     private static final String INTENT_CITY_NAMES = "city_names";
     private static final String INTENT_RESULT = "result";
     private static final String INTENT_REMOVED = "removed";
@@ -172,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         tvMaxTempNum.setText(currentWeatherData.getMaxTemperature() + DEGREE_SYMBOL);
         tvMinTempNum.setText(currentWeatherData.getMinTemperature() + DEGREE_SYMBOL);
         tvHumidityNum.setText(currentWeatherData.getHumidity() + PERCENT_SYMBOL);
-        tvWindSpeedNum.setText(currentWeatherData.getWindSpeed() + MPH_SYMBOL);
+        tvWindSpeedNum.setText(currentWeatherData.getWindSpeed() + SPACE + MPH_SYMBOL);
         if (USE_GPS) {
             // load weather image based on weather and time of day
             ImgLoader.loadImg(currentWeatherData, ivWeatherImg);
