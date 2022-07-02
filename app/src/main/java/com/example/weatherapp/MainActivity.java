@@ -25,8 +25,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.weatherapp.database.FavoriteCitiesDatabase;
-import com.example.weatherapp.database.FavoriteCityDao;
 import com.example.weatherapp.helper.ImgLoader;
 import com.example.weatherapp.location.LocationPermissionChecker;
 import com.example.weatherapp.weatherdata.CurrentWeatherData;
@@ -38,8 +36,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Boolean value that determines whether or not to enable GPS. Used for testing.
+    // Boolean value that determines whether or not to use a real GPS. Used for testing.
     private boolean USE_GPS;
+    // Boolean value that determines whether or not to use a real database. Used for testing.
     private boolean USE_DATABASE;
 
     private MainActivityPresenter presenter;
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     private EditText etSearchBar;
     private ImageButton ibSearchButton;
+    private ImageButton ibMoreOptions;
     private TextView tvCityName;
     private TextView tvTemperatureNum;
     private TextView tvWeather;
@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView rvForecastDataList;
     private ForecastListAdapter forecastListAdapter;
 
+    private static final boolean DEFAULT_VALUE = true;
     public static final String INTENT_ENABLE_GPS = "ENABLE_GPS";
     public static final String INTENT_USE_DATABASE = "USE_DATABASE";
     private static final int LOCATION_REFRESH_TIME = 600000;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK) {
-                        Log.d(LOG_MAIN_TAG, "RESULT_OK");
+                        Log.d(LOG_MAIN_TAG, "Result was RESULT_OK");
                         String resultString = result.getData().getStringExtra(INTENT_RESULT);
                         if (resultString != null) {
                             presenter.updateSearchedWeatherData(resultString);
@@ -90,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                             presenter.updateFavoriteCityNames(removedCities);
                         }
                     }
-                    else if (result.getResultCode() == RESULT_CANCELED){
-                        Log.d(LOG_MAIN_TAG, "RESULT_CANCELED");
+                    else {
+                        Log.d(LOG_MAIN_TAG, "Result was not RESULT_OK");
                     }
                 }
             });
@@ -100,14 +101,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Check intent extra to determine whether or not to enable GPS. Default value is true.
-        USE_GPS = getIntent().getBooleanExtra(INTENT_ENABLE_GPS, true);
-        USE_DATABASE = getIntent().getBooleanExtra(INTENT_USE_DATABASE, true);
+        // Check intent extra to determine whether or not to use GPS and database.
+        USE_GPS = getIntent().getBooleanExtra(INTENT_ENABLE_GPS, DEFAULT_VALUE);
+        USE_DATABASE = getIntent().getBooleanExtra(INTENT_USE_DATABASE, DEFAULT_VALUE);
 
         setContentView(R.layout.activity_main);
         appBarLayout = findViewById(R.id.app_bar_layout);
+        appBarLayout.setOutlineProvider(null);
         etSearchBar = findViewById(R.id.search_bar);
         ibSearchButton = findViewById(R.id.search_button);
+        ibMoreOptions = findViewById(R.id.options_button);
         tvCityName = findViewById(R.id.city_name);
         tvTemperatureNum = findViewById(R.id.temperature_num);
         tvWeather = findViewById(R.id.weather);
@@ -122,15 +125,13 @@ public class MainActivity extends AppCompatActivity {
         rvForecastDataList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvForecastDataList.setAdapter(forecastListAdapter);
 
-        appBarLayout.setOutlineProvider(null);
-
         // Set up MVP
         MainActivityModel model = new ViewModelProvider(this).get(MainActivityModel.class);
         presenter = new MainActivityPresenter(this, model, USE_DATABASE);
 
         findViewById(R.id.mock_location_btn).setOnClickListener(presenter::onMockButtonClicked);
         ibSearchButton.setOnClickListener(presenter::onSearchButtonClicked);
-        findViewById(R.id.options_button).setOnClickListener(presenter::onOptionsMenuClicked);
+        ibMoreOptions.setOnClickListener(presenter::onOptionsMenuClicked);
 
         if (USE_GPS) {
             disableAppBarLayout();
@@ -154,12 +155,14 @@ public class MainActivity extends AppCompatActivity {
         appBarLayout.setEnabled(false);
         etSearchBar.setEnabled(false);
         ibSearchButton.setEnabled(false);
+        ibMoreOptions.setEnabled(false);
     }
 
     public void enableAppBarLayout() {
         appBarLayout.setEnabled(true);
         etSearchBar.setEnabled(true);
         ibSearchButton.setEnabled(true);
+        ibMoreOptions.setEnabled(true);
     }
 
     public void setCurrentWeatherDataDisplay(CurrentWeatherData currentWeatherData) {

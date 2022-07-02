@@ -44,7 +44,7 @@
                 app:layout_constraintEnd_toStartOf="@id/options_button"
                 app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/options_button"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
