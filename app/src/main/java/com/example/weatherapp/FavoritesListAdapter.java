@@ -52,13 +52,6 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
         return position;
     }
 
-    @VisibleForTesting
-    public void setCityNames(List<String> cityNames) {
-        this.cityNames.clear();
-        this.cityNames.addAll(cityNames);
-        notifyDataSetChanged();
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvFavoriteCityName;
         private final Button btnRemoveFavorite;
