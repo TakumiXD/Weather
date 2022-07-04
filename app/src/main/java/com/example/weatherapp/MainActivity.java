@@ -20,6 +20,9 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -120,6 +123,20 @@ public class MainActivity extends AppCompatActivity {
         tvHumidityNum = findViewById(R.id.humidity_num);
         tvWindSpeedNum = findViewById(R.id.wind_speed_num);
         ivWeatherImg = findViewById(R.id.weather_img);
+        etSearchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    presenter.onSearchButtonClicked(v);
+                    etSearchBar.clearFocus();
+                    InputMethodManager inputMethodManager =
+                            (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(etSearchBar.getWindowToken(), 0);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         rvForecastDataList = findViewById(R.id.forecast_data_list);
         forecastListAdapter = new ForecastListAdapter(USE_GPS);
