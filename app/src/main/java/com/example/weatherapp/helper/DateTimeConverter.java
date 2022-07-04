@@ -13,6 +13,9 @@ public class DateTimeConverter {
     private static final String AM = "AM";
     private static final String PM = "PM";
 
+    // Convert the OpenWeatherMap API response's "dt_txt" format (YYYY-MM-DD HH:MM:SS) to
+    // the app's date and time display format ('Day of Week' 'TIME BY HOUR' 'AM/PM')
+    // Ex: 2022-07-03 21:00:00 -> Sunday 9 PM
     public static String jsonDateTimeToAppDateTime(String jsonDateTime) throws ParseException {
         String dayOfWeek = jsonDateToDayOfWeek(jsonDateTime.substring(0,10));
         String time = jsonTimeToSimplerTime(jsonDateTime.substring(11));

@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.weatherapp.helper.Dividers;
+
 import java.util.ArrayList;
 
 public class FavoritesActivity extends AppCompatActivity {
@@ -33,11 +35,13 @@ public class FavoritesActivity extends AppCompatActivity {
 
         rvFavoritesList = findViewById(R.id.favorites_list);
         favoritesListAdapter = new FavoritesListAdapter(this, cityNames);
-        rvFavoritesList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rvFavoritesList.setLayoutManager(linearLayoutManager);
         rvFavoritesList.setAdapter(favoritesListAdapter);
+        Dividers.addDividerLines(rvFavoritesList, linearLayoutManager);
     }
 
-    public void onFavoriteItemClicked(String cityName) {
+    public void onSeeCityButtonClicked(String cityName) {
         Intent intent = new Intent();
         intent.putExtra(INTENT_RESULT, cityName);
         setResult(RESULT_OK, intent);
