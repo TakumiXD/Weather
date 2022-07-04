@@ -31,6 +31,8 @@
                 android:hint="Search by city name"
                 android:background="@null"
                 android:maxLines="1"
+                android:imeOptions="actionSearch"
+                android:inputType="text" />
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/search_button"/>
 
@@ -198,6 +200,7 @@
 
     <Button
         android:id="@+id/mock_location_btn"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mock_location_btn"
