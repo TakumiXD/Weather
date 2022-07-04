@@ -2,7 +2,7 @@ package com.example.weatherapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.lifecycle.Lifecycle;
@@ -32,7 +32,7 @@ public class FavoritesTest {
     private static final int EXPECTED_ITEM_COUNT_AFTER = 2;
 
     @Before
-    public void startActivityWithIntent() {
+    public void createActivityWithIntents() {
         Context context = ApplicationProvider.getApplicationContext();
         Intent intent = new Intent(context, FavoritesActivity.class);
         ArrayList<String> favoriteCityNames = new ArrayList<>();
@@ -62,7 +62,7 @@ public class FavoritesTest {
             assertEquals(EXPECTED_ITEM_COUNT_BEFORE, activity.getFavoritesListAdapter().getItemCount());
             assertEquals(CITY_1, ((TextView)activity.getRvFavoritesList().findViewHolderForAdapterPosition(0)
                     .itemView.findViewById(R.id.favorite_city_name)).getText().toString());
-            ((Button)activity.getRvFavoritesList().findViewHolderForAdapterPosition(0)
+            ((ImageButton)activity.getRvFavoritesList().findViewHolderForAdapterPosition(0)
                     .itemView.findViewById(R.id.remove_favorite)).performClick();
             assertEquals(EXPECTED_ITEM_COUNT_AFTER, activity.getFavoritesListAdapter().getItemCount());
             assertNotEquals(CITY_1, ((TextView)activity.getRvFavoritesList().findViewHolderForAdapterPosition(0)

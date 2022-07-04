@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,16 +54,18 @@ public class FavoritesListAdapter extends RecyclerView.Adapter<FavoritesListAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvFavoriteCityName;
-        private final Button btnRemoveFavorite;
+        private final Button btnSeeCity;
+        private final ImageButton ibRemoveFavorite;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.tvFavoriteCityName = itemView.findViewById(R.id.favorite_city_name);
-            this.tvFavoriteCityName.setOnClickListener( view -> {
-                favoritesActivity.onFavoriteItemClicked(this.tvFavoriteCityName.getText().toString());
+            this.btnSeeCity = itemView.findViewById(R.id.see_city);
+            this.btnSeeCity.setOnClickListener( view -> {
+                favoritesActivity.onSeeCityButtonClicked(this.tvFavoriteCityName.getText().toString());
             });
-            this.btnRemoveFavorite = itemView.findViewById(R.id.remove_favorite);
-            this.btnRemoveFavorite.setOnClickListener( view -> {
+            this.ibRemoveFavorite = itemView.findViewById(R.id.remove_favorite);
+            this.ibRemoveFavorite.setOnClickListener(view -> {
                 removeCity(getAdapterPosition());
                 favoritesActivity.onRemoveButtonClicked(this.tvFavoriteCityName.getText().toString());
             });

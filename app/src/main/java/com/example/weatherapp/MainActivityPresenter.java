@@ -187,4 +187,9 @@ public class MainActivityPresenter {
     public String getCurrentSearchedCityName() {
         return currentSearchedCityName;
     }
+
+    @VisibleForTesting
+    public MainActivityModel getModel() {
+        return model;
+    }
 }

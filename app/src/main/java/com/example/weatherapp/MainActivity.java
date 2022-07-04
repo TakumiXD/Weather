@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                             presenter.updateSearchedWeatherData(resultString);
                         }
                         ArrayList removedCities = result.getData().getStringArrayListExtra(INTENT_REMOVED);
-                        if (!removedCities.isEmpty()) {
+                        if ((removedCities != null) && (!removedCities.isEmpty())) {
                             presenter.updateFavoriteCityNames(removedCities);
                         }
                     }

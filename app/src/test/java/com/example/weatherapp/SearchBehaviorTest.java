@@ -26,7 +26,7 @@ public class SearchBehaviorTest {
     private static final String NEW_LINE = "\n";
 
     @Before
-    public void setUp() {
+    public void createActivityWithIntents() {
         Context context = ApplicationProvider.getApplicationContext();
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(INTENT_ENABLE_GPS, false);
