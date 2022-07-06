@@ -1,0 +1,35 @@
+# WeatherApp
+A weather forecasting android app created with Android Studio (Java). 
+
+### Screenshots
+![gif-1](https://user-images.githubusercontent.com/85015271/177485442-2ca423c1-5755-4286-988e-abf9547b72cc.gif)
+
+### Features
+See the current temperature, conditions, forecast, and other metrics of the user's location.
+
+See the temperature, conditions, forecast, and other metrics of a searched location (by city name). 
+
+Add and delete favorite locations.
+
+### Sources, Libraries, and Dependencies
+[AndroidJUnit4](https://developer.android.com/reference/androidx/test/runner/AndroidJUnit4) for unit testing
+[Location](https://developer.android.com/reference/android/location/package-summary) to get user location and location permissions
+[Open Weather API](https://openweathermap.org/api) to get weather data
+[Picasso](https://github.com/square/picasso) to load images on my app provided by the [Open Weather website](https://openweathermap.org/weather-conditions)
+[Volley](https://google.github.io/volley/) to translate JSON text given by Open Weather API to something that could be used by this app
+[Room](https://developer.android.com/jetpack/androidx/releases/room) for database access and persistence for favorites feature
+
+Usage
+1. Clone this repository and open it on Android Studio. 
+2. Go to [this link](https://openweathermap.org/price#weather), choose a plan, and generate an API key. Once you get the API key, copy it.
+3. Go back to the Android Studio project. Go to `Weather/app/src/main/java/com/example/weatherapp/weatherdata/WeatherDataService.java`. Paste your API key on line 27.
+![img-1](https://user-images.githubusercontent.com/85015271/177498123-2aa4ca1d-1ce0-42f2-9d44-8657d9c16439.PNG)
+NOTE: If for any reason you would like to hide your API key, [this link](https://gist.github.com/loftywaif002/f2ebe2024ad73d6a579285dcba250465) is very helpful. 
+4. Feel free to run the app using an emulator or physical device!
+
+Disclaimer
+If the user does not grant location permissions, the app will not work as intended.
+![img-2](https://user-images.githubusercontent.com/85015271/177500787-fa8049cb-af2f-487f-b8cd-00d38ebee2d6.PNG)
+
+
+
