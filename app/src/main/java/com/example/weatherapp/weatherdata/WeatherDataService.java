@@ -24,7 +24,7 @@ public class WeatherDataService {
 
     private static final String CURRENT_URL = "https://api.openweathermap.org/data/2.5/weather";
     private static final String FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast";
-    private static final String WEATHER_KEY = "98d701b935327fa1cd69560c3f8d32c0";
+    private static final String WEATHER_KEY = "PASTE_YOUR_KEY_HERE";
     private static final String UNITS = "imperial";
 
     public WeatherDataService(Context context) {
