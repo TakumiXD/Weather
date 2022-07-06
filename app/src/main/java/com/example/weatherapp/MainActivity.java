@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String INTENT_USE_DATABASE = "USE_DATABASE";
     private static final int LOCATION_REFRESH_TIME = 600000;
     private static final int LOCATION_REFRESH_DISTANCE = 0;
+    private static final int START = 0;
     private static final String DEGREE_SYMBOL = "\u00B0";
     private static final String PERCENT_SYMBOL = "%";
     private static final String MPH_SYMBOL = "mph";
@@ -196,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setForecastWeatherDataDisplay(List<ForecastWeatherData> forecastWeatherDataList) {
+        rvForecastDataList.scrollToPosition(START);
         forecastListAdapter.setForecastWeatherDataList(forecastWeatherDataList);
     }
 
