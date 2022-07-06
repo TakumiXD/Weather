@@ -22,6 +22,10 @@ import java.util.List;
 public class ForecastWeatherDataTest {
     private static final String INTENT_ENABLE_GPS = "ENABLE_GPS";
     private static final String INTENT_USE_DATABASE = "USE_DATABASE";
+    private static final String DATE_AND_TIME = "Sunday 12 PM";
+    private static final double TEMPERATURE = 100;
+    private static final String WEATHER = "Weather";
+    private static final String WEATHER_ICON = "01d";
 
     /**
      * For some strange reason, notifyDataSetChanged in ForecastListAdapter does not call
@@ -42,11 +46,13 @@ public class ForecastWeatherDataTest {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            ForecastWeatherData expectedForecastWeatherData = new ForecastWeatherData("2022-06-26 18:00:00", 100, "Weather", "01d");
+            ForecastWeatherData expectedForecastWeatherData = new ForecastWeatherData(DATE_AND_TIME,
+                    TEMPERATURE, WEATHER, WEATHER_ICON);
             List<ForecastWeatherData> forecastWeatherDataList = new ArrayList<>();
             forecastWeatherDataList.add(expectedForecastWeatherData);
             activity.setForecastWeatherDataDisplay(forecastWeatherDataList);
             assertEquals(expectedForecastWeatherData, activity.getForecastListAdapter().getForecastWeatherDataList().get(0));
+            assertEquals(1, activity.getForecastListAdapter().getItemCount());
         });
     }
 }

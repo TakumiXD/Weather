@@ -22,7 +22,6 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -68,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String INTENT_USE_DATABASE = "USE_DATABASE";
     private static final int LOCATION_REFRESH_TIME = 600000;
     private static final int LOCATION_REFRESH_DISTANCE = 0;
+    private static final int START = 0;
     private static final String DEGREE_SYMBOL = "\u00B0";
     private static final String PERCENT_SYMBOL = "%";
     private static final String MPH_SYMBOL = "mph";
@@ -123,18 +123,17 @@ public class MainActivity extends AppCompatActivity {
         tvHumidityNum = findViewById(R.id.humidity_num);
         tvWindSpeedNum = findViewById(R.id.wind_speed_num);
         ivWeatherImg = findViewById(R.id.weather_img);
+        // When the search key on the keyboard is clicked
         etSearchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     presenter.onSearchButtonClicked(v);
-                    etSearchBar.clearFocus();
-                    InputMethodManager inputMethodManager =
-                            (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(etSearchBar.getWindowToken(), 0);
                     return true;
                 }
-                return false;
+                else {
+                    return false;
+                }
             }
         });
 
@@ -198,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setForecastWeatherDataDisplay(List<ForecastWeatherData> forecastWeatherDataList) {
+        rvForecastDataList.scrollToPosition(START);
         forecastListAdapter.setForecastWeatherDataList(forecastWeatherDataList);
     }
 

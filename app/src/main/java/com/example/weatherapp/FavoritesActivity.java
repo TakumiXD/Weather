@@ -44,6 +44,7 @@ public class FavoritesActivity extends AppCompatActivity {
     public void onSeeCityButtonClicked(String cityName) {
         Intent intent = new Intent();
         intent.putExtra(INTENT_RESULT, cityName);
+        intent.putExtra(INTENT_REMOVED, removedCities);
         setResult(RESULT_OK, intent);
         finish();
     }

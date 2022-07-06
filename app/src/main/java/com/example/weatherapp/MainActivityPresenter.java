@@ -2,11 +2,13 @@ package com.example.weatherapp;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.util.Log;
 import android.util.Pair;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -81,8 +83,13 @@ public class MainActivityPresenter {
     }
 
     public void onSearchButtonClicked(View view) {
-        String searchBarText = activity.getEtSearchBar().getText().toString();
         activity.disableGPS();
+        activity.getEtSearchBar().clearFocus();
+        // Hide the keyboard
+        InputMethodManager inputMethodManager =
+                (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getEtSearchBar().getWindowToken(), 0);
+        String searchBarText = activity.getEtSearchBar().getText().toString();
         updateSearchedWeatherData(searchBarText);
         Log.d("WeatherApp", "Search Button  with: " + searchBarText);
     }
