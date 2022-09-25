@@ -24,7 +24,6 @@ Add and delete favorite locations.
 2. Go to [this link](https://openweathermap.org/price#weather), choose a plan, and generate an API key. Once you get the API key, copy it.
 3. Go back to the Android Studio project. Go to `Weather/app/src/main/java/com/example/weatherapp/weatherdata/WeatherDataService.java`. Paste your API key on line 27.     
 ![img-1](https://user-images.githubusercontent.com/85015271/177504197-6436aa6b-97ea-47a5-98e0-b948a4e5ee44.PNG)    
-<strong>NOTE:</strong> If for any reason you would like to hide your API key, [this link](https://gist.github.com/loftywaif002/f2ebe2024ad73d6a579285dcba250465) is very helpful.   
 4. Feel free to run the app using an emulator or physical device!
 
 ### Disclaimer
